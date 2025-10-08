@@ -14,4 +14,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Sync quizzes
-        run: aws s3 sync quizzes/ s3://arn:aws:s3:::s3quizesbucket/quiz-content/ --delete
+        run: aws s3 sync quizzes/ s3://s3quizesbucket/quiz-content/ --delete
