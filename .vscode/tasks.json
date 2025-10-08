@@ -1,0 +1,14 @@
+[
+  {
+    "label": "CDK Deploy",
+    "type": "shell",
+    "command": "cd infra && cdk deploy",
+    "problemMatcher": []
+  },
+  {
+    "label": "Frontend Dev",
+    "type": "shell",
+    "command": "cd frontend && npm run dev",
+    "problemMatcher": []
+  }
+]

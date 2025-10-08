@@ -14,7 +14,7 @@
       "type": "short",
       "prompt": "What does DNS stand for?",
       "correctAnswer": "Domain Name System",
-      "explanation": "DNS maps names to IPs." 
+      "explanation": "DNS maps names to IPs."
     }
   ]
 }
