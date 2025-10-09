@@ -1,0 +1,18 @@
+﻿{
+    "Version":  "2012-10-17",
+    "Statement":  [
+                      {
+                          "Effect":  "Allow",
+                          "Principal":  {
+                                            "Service":  "cloudfront.amazonaws.com"
+                                        },
+                          "Action":  "s3:GetObject",
+                          "Resource":  "arn:aws:s3:::quizinfrastack-sitebucket397a1860-k45xapjpkqxj/*",
+                          "Condition":  {
+                                            "StringEquals":  {
+                                                                 "AWS:SourceArn":  "arn:aws:cloudfront::446056240677:distribution/E3CHML5W6W5P6B"
+                                                             }
+                                        }
+                      }
+                  ]
+}

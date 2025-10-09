@@ -16,7 +16,7 @@ export const handler = async (event: any) => {
   const bucketName = process.env.SUBJECTS_BUCKET;
   if (!bucketName) {
     console.error("SUBJECTS_BUCKET is not set");
-    return { statusCode: 500, body: "Server configuration error" };
+    return { statusCode: 500, headers: { "Content-Type": "text/plain", "Access-Control-Allow-Origin": "*" }, body: "Server configuration error" };
   }
 
   const subject = event.queryStringParameters?.subject;
@@ -35,7 +35,7 @@ export const handler = async (event: any) => {
 
       return {
         statusCode: 200,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
         body: JSON.stringify(subjects),
       };
     }
@@ -52,11 +52,11 @@ export const handler = async (event: any) => {
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
       body,
     };
   } catch (err) {
     console.error(err);
-    return { statusCode: 500, body: "Error fetching subject questions" };
+    return { statusCode: 500, headers: { "Content-Type": "text/plain", "Access-Control-Allow-Origin": "*" }, body: "Error fetching subject questions" };
   }
 };

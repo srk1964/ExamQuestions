@@ -816,6 +816,12 @@
   "SiteBucket397A1860": {
    "Type": "AWS::S3::Bucket",
    "Properties": {
+    "PublicAccessBlockConfiguration": {
+     "BlockPublicAcls": true,
+     "BlockPublicPolicy": true,
+     "IgnorePublicAcls": true,
+     "RestrictPublicBuckets": true
+    },
     "Tags": [
      {
       "Key": "aws-cdk:cr-owned:340f1254",
@@ -825,10 +831,7 @@
       "Key": "aws-cdk:cr-owned:c3403a36",
       "Value": "true"
      }
-    ],
-    "WebsiteConfiguration": {
-     "IndexDocument": "index.html"
-    }
+    ]
    },
    "UpdateReplacePolicy": "Retain",
    "DeletionPolicy": "Retain",
@@ -850,10 +853,50 @@
        "Principal": {
         "CanonicalUser": {
          "Fn::GetAtt": [
-          "SiteOAI1F7E9870",
+          "SiteDistributionOrigin1S3Origin8B65D95B",
           "S3CanonicalUserId"
          ]
         }
+       },
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "SiteBucket397A1860",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "s3:GetObject",
+       "Condition": {
+        "StringEquals": {
+         "AWS:SourceArn": {
+          "Fn::Join": [
+           "",
+           [
+            "arn:aws:cloudfront::",
+            {
+             "Ref": "AWS::AccountId"
+            },
+            ":distribution/",
+            {
+             "Ref": "SiteDistribution3FF9535D"
+            }
+           ]
+          ]
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "cloudfront.amazonaws.com"
        },
        "Resource": {
         "Fn::Join": [
@@ -878,15 +921,29 @@
     "aws:cdk:path": "QuizInfraStack/SiteBucket/Policy/Resource"
    }
   },
-  "SiteOAI1F7E9870": {
-   "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+  "SiteOAC": {
+   "Type": "AWS::CloudFront::OriginAccessControl",
    "Properties": {
-    "CloudFrontOriginAccessIdentityConfig": {
-     "Comment": "Allows CloudFront to reach the bucket"
+    "OriginAccessControlConfig": {
+     "Name": "SiteOAC",
+     "OriginAccessControlOriginType": "s3",
+     "SigningBehavior": "always",
+     "SigningProtocol": "sigv4"
     }
    },
    "Metadata": {
-    "aws:cdk:path": "QuizInfraStack/SiteOAI/Resource"
+    "aws:cdk:path": "QuizInfraStack/SiteOAC"
+   }
+  },
+  "SiteDistributionOrigin1S3Origin8B65D95B": {
+   "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+   "Properties": {
+    "CloudFrontOriginAccessIdentityConfig": {
+     "Comment": "Identity for QuizInfraStackSiteDistributionOrigin18B8BC936"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "QuizInfraStack/SiteDistribution/Origin1/S3Origin/Resource"
    }
   },
   "SiteDistribution3FF9535D": {
@@ -911,7 +968,7 @@
       "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
       "Compress": true,
       "TargetOriginId": "QuizInfraStackSiteDistributionOrigin18B8BC936",
-      "ViewerProtocolPolicy": "allow-all"
+      "ViewerProtocolPolicy": "redirect-to-https"
      },
      "DefaultRootObject": "index.html",
      "Enabled": true,
@@ -926,18 +983,14 @@
         ]
        },
        "Id": "QuizInfraStackSiteDistributionOrigin18B8BC936",
+       "OriginAccessControlId": {
+        "Fn::GetAtt": [
+         "SiteOAC",
+         "Id"
+        ]
+       },
        "S3OriginConfig": {
-        "OriginAccessIdentity": {
-         "Fn::Join": [
-          "",
-          [
-           "origin-access-identity/cloudfront/",
-           {
-            "Ref": "SiteOAI1F7E9870"
-           }
-          ]
-         ]
-        }
+        "OriginAccessIdentity": ""
        }
       }
      ]
@@ -1033,7 +1086,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-446056240677-us-east-1",
-     "S3Key": "4223613ca49059727067b6cbd3ea70937403f6424c68b0455f71a15ec0dfb7be.zip"
+     "S3Key": "2918b5c72e5b47e607f2add00c6ef9d3e1e83958d2e30809d44058c1d705a2c2.zip"
     },
     "Environment": {
      "Variables": {
@@ -1057,7 +1110,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "QuizInfraStack/SubjectsLambda/Resource",
-    "aws:asset:path": "asset.4223613ca49059727067b6cbd3ea70937403f6424c68b0455f71a15ec0dfb7be",
+    "aws:asset:path": "asset.2918b5c72e5b47e607f2add00c6ef9d3e1e83958d2e30809d44058c1d705a2c2",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -1088,10 +1141,20 @@
      ]
     },
     "SourceBucketNames": [
+     "cdk-hnb659fds-assets-446056240677-us-east-1",
      "cdk-hnb659fds-assets-446056240677-us-east-1"
     ],
     "SourceObjectKeys": [
-     "d4769a58ac1a57ded07da796dfe97006d1e790f8f6c7cf5c8ce7a6caa8509820.zip"
+     "d4769a58ac1a57ded07da796dfe97006d1e790f8f6c7cf5c8ce7a6caa8509820.zip",
+     "6f08d25d4e81386d5696cb585ae921b55555c526d6409f92fe64ca883e84b275.zip"
+    ],
+    "SourceMarkers": [
+     {},
+     {}
+    ],
+    "SourceMarkersConfig": [
+     {},
+     {}
     ],
     "DestinationBucketName": {
      "Ref": "SiteBucket397A1860"
@@ -1188,7 +1251,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-446056240677-us-east-1",
-     "S3Key": "4223613ca49059727067b6cbd3ea70937403f6424c68b0455f71a15ec0dfb7be.zip"
+     "S3Key": "2918b5c72e5b47e607f2add00c6ef9d3e1e83958d2e30809d44058c1d705a2c2.zip"
     },
     "Environment": {
      "Variables": {
@@ -1212,7 +1275,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "QuizInfraStack/GetQuestionsLambda/Resource",
-    "aws:asset:path": "asset.4223613ca49059727067b6cbd3ea70937403f6424c68b0455f71a15ec0dfb7be",
+    "aws:asset:path": "asset.2918b5c72e5b47e607f2add00c6ef9d3e1e83958d2e30809d44058c1d705a2c2",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -1283,7 +1346,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/21Ry27CMBD8Fu7GpeHUYwhCqtSWKki9RsZZ0gXHjrLrRlGUf6+cB+TAaWbHa+/sOJLR65vcrFRDa53f1gbPsjux0jehGso62spu5/UNWCQXO7ERvp1B3T7kqR6LnSLohaqwUAyNamWXAnFcYehf0Fhr5y2LPVTGtSXYYc6iOrEqIGgjSYGcrzWE98Un8K/Lw+HE5tNpyMB7gaqUXerMKAd8WB9ZL4wqz7mSXZCgLpEInQ0NH6qF+gfqoT6hLQywswdvNQflTpLLXewFbbMuv+8gx0gWSykiYJJxgF5o43x+qZ1l2R1rLDCkAkTvOVhGHnwmoecQep527JG4xrOfrSzrebnMuhyuJL8GeJhdhnb0XHmeL5iwe6Ya0gZl3FBicIhDDMbDh6AtROKJXfk8+jBSXunlL4pktJGb1ZUQ17W3jCXIdMR/Yt3mm4QCAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/3VRy27CMBD8Fu7GpeHUYwhCqtSWKki9IuMs6YJjR951IxTl3ys7PHJoTzM7Xu96xpnMnl/kYqY6muvqPDd4kP2OlT4L1dG+p6XsV0GfgUVxtFc2wqczqC8P+VqPxUoRDEK1WCuGTl1kXwJx3mLsn9BcaxcsizW0xl0asGnPpNqxqiFqIymBXPAa4nzxDvztqnh4ZbfT65LEB4GqkX3pzChHfDx9ZIMwqjlUSvZRAt8gETobG97UBfwX+FTv0NYG2NlNsJqjcifF8S4Ogpb7vrp7kGMkE1OKCJhkHmEQ2rhQHb2znPZvPdYYgwGiwln2zog1Ens8hLRq2vBagWXk5KWIczZxzn8d0zE3z3vrKjiR/Ejw8DDNchu4DXy7YGIke9WRNijzjgqDKSWR/MR/QluLIhC75u8fiSvliZ5+skxmC7mYnQhx7oNlbECWI/4CwHVKwpsCAAA="
    },
    "Metadata": {
     "aws:cdk:path": "QuizInfraStack/CDKMetadata/Default"

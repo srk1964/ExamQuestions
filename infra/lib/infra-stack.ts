@@ -35,24 +35,25 @@ export class QuizInfraStack extends cdk.Stack {
       destinationKeyPrefix: "quiz-content",
     });
     const siteBucket = new s3.Bucket(this, "SiteBucket", {
-      websiteIndexDocument: "index.html",
       publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     });
 
-       // Create an Origin Access Identity
-         const oai = new cloudfront.OriginAccessIdentity(this, "SiteOAI");
+    const oac = new cloudfront.CfnOriginAccessControl(this, 'SiteOAC', {
+      originAccessControlConfig: {
+        name: 'SiteOAC',
+        originAccessControlOriginType: 's3',
+        signingBehavior: 'always',
+        signingProtocol: 'sigv4',
+      },
+    });
 
-        // Grant CloudFront read access via a bucket policy that references the OAI canonical user
-         siteBucket.addToResourcePolicy(new iam.PolicyStatement({
-        actions: ["s3:GetObject"],
-        resources: [siteBucket.arnForObjects("*")],
-        principals: [new iam.CanonicalUserPrincipal(oai.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
-         }));
-
-        const distribution = new cloudfront.Distribution(this, "SiteDistribution", {
-         defaultRootObject: "index.html",
-         defaultBehavior: { origin: origins.S3BucketOrigin.withOriginAccessIdentity(siteBucket, { originAccessIdentity: oai }),
-         },
+    const distribution = new cloudfront.Distribution(this, "SiteDistribution", {
+      defaultRootObject: "index.html",
+      defaultBehavior: {
+        origin: new origins.S3Origin(siteBucket),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      },
       errorResponses: [
         {
           httpStatus: 403,
@@ -68,6 +69,23 @@ export class QuizInfraStack extends cdk.Stack {
         },
       ],
     });
+
+    const cfnDistribution = distribution.node.defaultChild as cloudfront.CfnDistribution;
+    cfnDistribution.addPropertyOverride('DistributionConfig.Origins.0.OriginAccessControlId', oac.getAtt('Id'));
+    cfnDistribution.addPropertyOverride('DistributionConfig.Origins.0.S3OriginConfig.OriginAccessIdentity', "");
+
+
+    siteBucket.addToResourcePolicy(new iam.PolicyStatement({
+      actions: ["s3:GetObject"],
+      resources: [siteBucket.arnForObjects("*")],
+      principals: [new iam.ServicePrincipal("cloudfront.amazonaws.com")],
+      conditions: {
+        StringEquals: {
+          "AWS:SourceArn": `arn:aws:cloudfront::${cdk.Aws.ACCOUNT_ID}:distribution/${distribution.distributionId}`,
+        },
+      },
+    }));
+
     const subjectsLambda = new NodejsFunction(this, "SubjectsLambda", {
       entry: path.join(__dirname, "../lambda/list-subjects/index.ts"),
       handler: "handler",
@@ -101,7 +119,12 @@ export class QuizInfraStack extends cdk.Stack {
 
 
     new s3deploy.BucketDeployment(this, "DeploySite", {
-      sources: [s3deploy.Source.asset("../frontend/dist")],
+      sources: [
+        s3deploy.Source.asset("../frontend/dist"),
+        // Small timestamp source to force a new asset hash when you synth/deploy locally.
+        // This helps ensure CDK's BucketDeployment picks up local changes to `frontend/dist`.
+        s3deploy.Source.data("deploy-timestamp.txt", new Date().toISOString()),
+      ],
       destinationBucket: siteBucket,
       distribution,
       distributionPaths: ["/*"],
