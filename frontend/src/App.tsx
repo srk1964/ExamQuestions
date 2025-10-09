@@ -8,6 +8,7 @@ function App() {
   const [subjects, setSubjects] = useState<string[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [questions, setQuestions] = useState<any>(null);
+  const [answers, setAnswers] = useState<Record<string, { selected?: string; correct?: boolean }>>({});
   const [loadingSubjects, setLoadingSubjects] = useState(true);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -74,6 +75,12 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setQuestions(data);
+        // reset answers state when new questions load
+        const newAnswers: Record<string, { selected?: string; correct?: boolean }> = {};
+        (data?.questions || []).forEach((q: any) => {
+          newAnswers[q.id] = {};
+        });
+        setAnswers(newAnswers);
         setLoadingQuestions(false);
       })
       .catch((err) => {
@@ -82,6 +89,17 @@ function App() {
         setLoadingQuestions(false);
       });
   }, [selected, config]);
+
+  function handleMcqSelect(q: any, option: string) {
+    const correct = option === q.correctAnswer;
+    setAnswers((prev) => ({ ...prev, [q.id]: { selected: option, correct } }));
+  }
+
+  function handleShortSubmit(q: any, value: string) {
+    const normalize = (s: string) => s.trim().toLowerCase();
+    const correct = normalize(value) === normalize(q.correctAnswer || "");
+    setAnswers((prev) => ({ ...prev, [q.id]: { selected: value, correct } }));
+  }
 
   if (!config && !error) return <p>Loading configuration...</p>;
   if (loadingSubjects) return <p>Loading subjects...</p>;
@@ -108,7 +126,72 @@ function App() {
           {loadingQuestions ? (
             <p>Loading questions...</p>
           ) : questions ? (
-            <pre>{JSON.stringify(questions, null, 2)}</pre>
+            <div>
+              {(questions.questions || []).map((q: any) => {
+                const ans = answers[q.id] || {};
+                return (
+                  <div key={q.id} style={{ marginBottom: '1.5rem', padding: '1rem', border: '1px solid #ddd', borderRadius: 6 }}>
+                    <p style={{ fontWeight: 600 }}>{q.prompt}</p>
+                    {q.type === 'mcq' && (
+                      <div>
+                        {q.options.map((opt: string) => {
+                          const selected = ans.selected === opt;
+                          const isCorrect = ans.correct && selected;
+                          const isIncorrect = ans.selected && !ans.correct && selected;
+                          return (
+                            <button
+                              key={opt}
+                              onClick={() => handleMcqSelect(q, opt)}
+                              disabled={!!ans.selected}
+                              style={{
+                                display: 'block',
+                                margin: '6px 0',
+                                padding: '8px 12px',
+                                cursor: ans.selected ? 'default' : 'pointer',
+                                background: isCorrect ? '#d4f8d4' : isIncorrect ? '#ffd6d6' : '#fff',
+                                border: '1px solid #ccc',
+                                borderRadius: 4,
+                              }}
+                            >
+                              {opt}
+                            </button>
+                          );
+                        })}
+                        {ans.selected && (
+                          <div style={{ marginTop: 8 }}>
+                            <p style={{ margin: 0 }}>
+                              {ans.correct ? (
+                                <span style={{ color: 'green', fontWeight: 600 }}>Correct</span>
+                              ) : (
+                                <span style={{ color: 'red', fontWeight: 600 }}>Incorrect</span>
+                              )}
+                            </p>
+                            {q.explanation && <p style={{ marginTop: 6 }}>{q.explanation}</p>}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {q.type === 'short' && (
+                      <div>
+                        {!ans.selected ? (
+                          <ShortAnswerInput onSubmit={(v: string) => handleShortSubmit(q, v)} />
+                        ) : (
+                          <div>
+                            {ans.correct ? (
+                              <span style={{ color: 'green', fontWeight: 600 }}>Correct</span>
+                            ) : (
+                              <span style={{ color: 'red', fontWeight: 600 }}>Incorrect — correct answer: {q.correctAnswer}</span>
+                            )}
+                            {q.explanation && <p style={{ marginTop: 6 }}>{q.explanation}</p>}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           ) : (
             <p>No questions loaded</p>
           )}
@@ -121,4 +204,14 @@ function App() {
 }
 
 export default App;
+
+function ShortAnswerInput({ onSubmit }: { onSubmit: (v: string) => void }) {
+  const [value, setValue] = useState('');
+  return (
+    <div>
+      <input value={value} onChange={(e) => setValue(e.target.value)} placeholder="Type your answer" style={{ padding: '8px', width: '60%' }} />
+      <button onClick={() => onSubmit(value)} style={{ marginLeft: 8, padding: '8px 12px' }}>Submit</button>
+    </div>
+  );
+}
 

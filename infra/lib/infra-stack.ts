@@ -175,6 +175,9 @@ export class QuizInfraStack extends cdk.Stack {
       // Invalidate the config file on deploy
       distribution,
       distributionPaths: ["/config.json"],
+      // Prevent CloudFront and browsers from caching config.json so runtime
+      // configuration changes propagate immediately.
+      cacheControl: [s3deploy.CacheControl.noCache()],
     });
     // Ensure config.json is written after the site files so the frontend can fetch it
     // immediately after site deployment. This prevents races where CI uploads the
