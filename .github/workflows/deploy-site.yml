@@ -1,9 +1,11 @@
 name: Deploy Infra and Frontend
 
+name: Deploy Infra and Frontend
+
 on:
   push:
     branches:
-      - main   # or whatever branch you want to deploy from
+      - main   # adjust if you deploy from a different branch
 
 jobs:
   deploy:
@@ -16,19 +18,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
+          cache: 'npm'
 
+      # --- Frontend build ---
       - name: Install dependencies (frontend)
         working-directory: frontend
-        run: npm install
+        run: npm ci
 
       - name: Build frontend
         working-directory: frontend
         run: npm run build
 
+      # --- Infra deploy ---
       - name: Install dependencies (infra)
         working-directory: infra
-        run: npm install
+        run: npm ci
 
       - name: CDK Deploy
         working-directory: infra
