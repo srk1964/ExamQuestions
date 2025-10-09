@@ -19,7 +19,7 @@ function App() {
 
 useEffect(() => {
   if (subjects) {
-    fetch(`${import.meta.env.VITE_API_URL}/get-questions?subject=${subjects}`)
+    fetch(`${import.meta.env.VITE_API_URL}/infra/lambda/list-subjects?subject=${subjects}`)
       .then(res => res.json())
       .then(data => setLoading(data))
       .catch(err => console.error("Error fetching questions:", err));
