@@ -915,29 +915,26 @@
      "IPV6Enabled": true,
      "Origins": [
       {
-       "CustomOriginConfig": {
-        "OriginProtocolPolicy": "http-only",
-        "OriginSSLProtocols": [
-         "TLSv1.2"
+       "DomainName": {
+        "Fn::GetAtt": [
+         "SiteBucket397A1860",
+         "RegionalDomainName"
         ]
        },
-       "DomainName": {
-        "Fn::Select": [
-         2,
-         {
-          "Fn::Split": [
-           "/",
+       "Id": "QuizInfraStackSiteDistributionOrigin18B8BC936",
+       "S3OriginConfig": {
+        "OriginAccessIdentity": {
+         "Fn::Join": [
+          "",
+          [
+           "origin-access-identity/cloudfront/",
            {
-            "Fn::GetAtt": [
-             "SiteBucket397A1860",
-             "WebsiteURL"
-            ]
+            "Ref": "SiteOAI1F7E9870"
            }
           ]
-         }
-        ]
-       },
-       "Id": "QuizInfraStackSiteDistributionOrigin18B8BC936"
+         ]
+        }
+       }
       }
      ]
     }
@@ -986,34 +983,22 @@
     "PolicyDocument": {
      "Statement": [
       {
-       "Action": [
-        "s3:GetObject*",
-        "s3:GetBucket*",
-        "s3:List*"
-       ],
+       "Action": "s3:GetObject",
        "Effect": "Allow",
-       "Resource": [
-        {
-         "Fn::GetAtt": [
-          "QuizBucketC5FC104D",
-          "Arn"
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "QuizBucketC5FC104D",
+            "Arn"
+           ]
+          },
+          "/quiz-content/*"
          ]
-        },
-        {
-         "Fn::Join": [
-          "",
-          [
-           {
-            "Fn::GetAtt": [
-             "QuizBucketC5FC104D",
-             "Arn"
-            ]
-           },
-           "/*"
-          ]
-         ]
-        }
-       ]
+        ]
+       }
       }
      ],
      "Version": "2012-10-17"
@@ -1153,34 +1138,22 @@
     "PolicyDocument": {
      "Statement": [
       {
-       "Action": [
-        "s3:GetObject*",
-        "s3:GetBucket*",
-        "s3:List*"
-       ],
+       "Action": "s3:GetObject",
        "Effect": "Allow",
-       "Resource": [
-        {
-         "Fn::GetAtt": [
-          "QuizBucketC5FC104D",
-          "Arn"
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "QuizBucketC5FC104D",
+            "Arn"
+           ]
+          },
+          "/quiz-content/*"
          ]
-        },
-        {
-         "Fn::Join": [
-          "",
-          [
-           {
-            "Fn::GetAtt": [
-             "QuizBucketC5FC104D",
-             "Arn"
-            ]
-           },
-           "/*"
-          ]
-         ]
-        }
-       ]
+        ]
+       }
       }
      ],
      "Version": "2012-10-17"
