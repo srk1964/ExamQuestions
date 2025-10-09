@@ -5,7 +5,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/list-subjects`)
+    fetch(`${import.meta.env.VITE_API_URL}/infra/lambda/list-subjects`)
       .then(res => res.json())
       .then(data => {
         setSubjects(data);
@@ -29,7 +29,7 @@ useEffect(() => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>subjectssubjectssubjectssubjectssubjectssubjects
+    <div style={{ padding: "2rem" }}>subjects
       <h1>Quiz App</h1>
       <ul>
         {subjects.map((s) => (
