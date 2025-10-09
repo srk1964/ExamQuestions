@@ -7,6 +7,7 @@ import * as iam from "aws-cdk-lib/aws-iam";
 import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
+import * as apigateway from "aws-cdk-lib/aws-apigateway";
 
 export class QuizInfraStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -101,6 +102,24 @@ export class QuizInfraStack extends cdk.Stack {
       distribution,
       distributionPaths: ["/*"],
     });
+
+    // Lambda
+    const getQuestionsLambda = new lambda.Function(this, "GetQuestionsLambda", {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset("lambda/get-questions"),
+      environment: {
+        SUBJECTS_BUCKET: siteBucket.bucketName,
+      },
+    });
+
+    siteBucket.grantRead(getQuestionsLambda);
+
+    // API Gateway
+    const getQuestions = api.root.addResource("get-questions");
+    getQuestions.addMethod("GET", new apigateway.LambdaIntegration(getQuestionsLambda));
+
+
     new cdk.CfnOutput(this, "BucketName", { value: bucket.bucketName });
     new cdk.CfnOutput(this, "ApiUrl", { value: api.url });
     new cdk.CfnOutput(this, "CloudFrontURL", {value: "https://" + distribution.distributionDomainName});

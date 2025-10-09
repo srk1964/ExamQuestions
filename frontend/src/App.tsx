@@ -17,11 +17,19 @@ function App() {
       });
   }, []);
 
+useEffect(() => {
+  if (subjects) {
+    fetch(`${import.meta.env.VITE_API_URL}/get-questions?subject=${subjects}`)
+      .then(res => res.json())
+      .then(data => setLoading(data))
+      .catch(err => console.error("Error fetching questions:", err));
+  }
+}, [subjects]);
 
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div style={{ padding: "2rem" }}>subjectssubjectssubjectssubjectssubjectssubjects
       <h1>Quiz App</h1>
       <ul>
         {subjects.map((s) => (
