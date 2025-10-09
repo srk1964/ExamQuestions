@@ -19,8 +19,16 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      # --- Frontend build ---
       - name: Install dependencies (frontend)
+        working-directory: frontend
+        run: npm install
+
+      - name: Install dependencies (infra)
+        working-directory: infra
+        run: npm install
+
+      # --- Frontend build ---
+      - name: Install ci dependencies (frontend)
         working-directory: frontend
         run: npm ci
 
@@ -29,7 +37,7 @@ jobs:
         run: npm run build
 
       # --- Infra deploy ---
-      - name: Install dependencies (infra)
+      - name: Install ci dependencies (infra)
         working-directory: infra
         run: npm ci
 
