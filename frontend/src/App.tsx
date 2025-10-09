@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+interface Config {
+  VITE_API_URL: string;
+}
+
 function App() {
   const [subjects, setSubjects] = useState<string[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
@@ -7,12 +11,23 @@ function App() {
   const [loadingSubjects, setLoadingSubjects] = useState(true);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const apiBase = import.meta.env.VITE_API_URL;
+  const [config, setConfig] = useState<Config | null>(null);
 
   useEffect(() => {
+    // Fetch config.json from the root of the site
+    fetch("/config.json")
+      .then((res) => res.json())
+      .then((data) => setConfig(data))
+      .catch((err) => {
+        console.error("Failed to load config:", err);
+        setError("Failed to load app configuration");
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!config) return;
     setLoadingSubjects(true);
-    const url = `${apiBase}/list-subjects`;
+    const url = `${config.VITE_API_URL}/list-subjects`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -24,13 +39,15 @@ function App() {
         setError("Failed to load subjects");
         setLoadingSubjects(false);
       });
-  }, [apiBase]);
+  }, [config]);
 
   useEffect(() => {
-    if (!selected) return;
+    if (!selected || !config) return;
     setLoadingQuestions(true);
     setError(null);
-    const url = `${apiBase}/list-subjects?subject=${encodeURIComponent(selected)}`;
+    const url = `${config.VITE_API_URL}/list-subjects?subject=${encodeURIComponent(
+      selected
+    )}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -42,8 +59,9 @@ function App() {
         setError("Failed to load questions");
         setLoadingQuestions(false);
       });
-  }, [selected, apiBase]);
+  }, [selected, config]);
 
+  if (!config && !error) return <p>Loading configuration...</p>;
   if (loadingSubjects) return <p>Loading subjects...</p>;
 
   return (

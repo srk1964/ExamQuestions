@@ -136,7 +136,7 @@ export class QuizInfraStack extends cdk.Stack {
     new cdk.CfnOutput(this, "ApiUrl", { value: api.url });
     new cdk.CfnOutput(this, "CloudFrontURL", {value: "https://" + distribution.distributionDomainName});
 
-    // deploy a config file to the site bucket
+    // Deploy a config.json file to the site bucket to be used at runtime by the frontend
     new s3deploy.BucketDeployment(this, "DeployConfig", {
       sources: [
         s3deploy.Source.data(
@@ -145,6 +145,9 @@ export class QuizInfraStack extends cdk.Stack {
         ),
       ],
       destinationBucket: siteBucket,
+      // Invalidate the config file on deploy
+      distribution,
+      distributionPaths: ["/config.json"],
     });
   }
 }

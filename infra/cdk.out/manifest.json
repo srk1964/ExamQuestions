@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::446056240677:role/cdk-hnb659fds-deploy-role-446056240677-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::446056240677:role/cdk-hnb659fds-cfn-exec-role-446056240677-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-446056240677-us-east-1/b8a62454b03e9599917d522a8bc3d8045f405ad6bdd66e1662aab3e769ff64e4.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-446056240677-us-east-1/81ebed99532962154f7a6d8d28f580439472f9141426bda3b92e113200fee5d1.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -212,6 +212,14 @@
           {
             "type": "aws:cdk:is-custom-resource-handler-runtime-family",
             "data": 2
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
           }
         ],
         "/QuizInfraStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource": [
@@ -320,6 +328,18 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "CloudFrontURL"
+          }
+        ],
+        "/QuizInfraStack/DeployConfig/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeployConfigAwsCliLayer82EC2BC1"
+          }
+        ],
+        "/QuizInfraStack/DeployConfig/CustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeployConfigCustomResource1BE66F5D"
           }
         ],
         "/QuizInfraStack/CDKMetadata/Default": [
