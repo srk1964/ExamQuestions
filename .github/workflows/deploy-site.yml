@@ -32,7 +32,7 @@ jobs:
       - name: Build Lambda
         run: |
           cd infra/lambda/list-subjects
-          npm ci
+          npm install
           npm run build
 
       # --- Infra deploy ---
