@@ -52,7 +52,7 @@ class QuizInfraStack extends cdk.Stack {
         const listSubjectsFn = new lambda.Function(this, "ListSubjectsFn", {
             runtime: lambda.Runtime.NODEJS_18_X,
             handler: "index.handler",
-            code: lambda.Code.fromAsset("../lambda/list-subjects"),
+            code: lambda.Code.fromAsset("/infra/lambda/list-subjects"),
             environment: { QUIZ_BUCKET: bucket.bucketName },
         });
         bucket.grantRead(listSubjectsFn);
