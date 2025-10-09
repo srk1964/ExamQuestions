@@ -30,6 +30,8 @@ function App() {
       .catch((err) => {
         console.error("Failed to load config:", err);
         setError("Failed to load app configuration: " + String(err));
+        // Ensure we stop the 'Loading subjects...' state so the error is visible
+        setLoadingSubjects(false);
       });
   }, []);
 
