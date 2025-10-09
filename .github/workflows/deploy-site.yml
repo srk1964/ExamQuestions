@@ -31,9 +31,9 @@ jobs:
 
       - name: Build Lambda
         run: |
-        cd lambda/list-subjects
-        npm ci
-        npm run build
+          cd lambda/list-subjects
+          npm ci
+          npm run build
 
       # --- Infra deploy ---
       - name: Clean install dependencies (infra)
