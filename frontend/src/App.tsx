@@ -2,12 +2,19 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [subjects, setSubjects] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/list-subjects`)
       .then(res => res.json())
-      .then(data => setSubjects(data))
-      .catch(err => console.error("Error fetching subjects:", err));
+      .then(data => {
+        setSubjects(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching subjects:", err);
+        setLoading(false);
+      });
   }, []);
 
 
@@ -26,5 +33,4 @@ function App() {
 }
 
 export default App;
-
 
