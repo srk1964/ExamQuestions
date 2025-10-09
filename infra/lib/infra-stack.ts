@@ -129,6 +129,6 @@ export class QuizInfraStack extends cdk.Stack {
     new cdk.CfnOutput(this, "BucketName", { value: bucket.bucketName });
     new cdk.CfnOutput(this, "ApiUrl", { value: api.url });
     new cdk.CfnOutput(this, "CloudFrontURL", {value: "https://" + distribution.distributionDomainName});
-
+    
   }
 }
