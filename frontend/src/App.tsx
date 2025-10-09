@@ -5,18 +5,12 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Replace with your actual API Gateway URL
-    fetch(import.meta.env.VITE_API_URL + "/list-subjects")
-      .then((res) => res.json())
-      .then((data) => {
-        setSubjects(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching subjects:", err);
-        setLoading(false);
-      });
+    fetch(`${import.meta.env.VITE_API_URL}/list-subjects`)
+      .then(res => res.json())
+      .then(data => setSubjects(data))
+      .catch(err => console.error("Error fetching subjects:", err));
   }, []);
+
 
   if (loading) return <p>Loading...</p>;
 
