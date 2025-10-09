@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [subjects, setSubjects] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/list-subjects`)
@@ -27,4 +26,5 @@ function App() {
 }
 
 export default App;
+
 
