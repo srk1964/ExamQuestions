@@ -76,6 +76,28 @@ export class QuizInfraStack extends cdk.Stack {
       ],
     });
 
+    const subjectsLambda = new lambda.Function(this, "SubjectsLambda", {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset("lambda/subjects"), // folder with the code above
+      environment: {
+        SUBJECTS_BUCKET: siteBucket.bucketName,
+      },
+    });
+
+    siteBucket.grantRead(subjectsLambda);
+
+    const api = new apigateway.RestApi(this, "QuizApi", {
+      restApiName: "Quiz Service",
+    });
+
+    const subjects = api.root.addResource("list-subjects");
+    subjects.addMethod("GET", new apigateway.LambdaIntegration(subjectsLambda));
+
+    new cdk.CfnOutput(this, "ApiUrl", {
+      value: api.url,
+    });
+
 
     new s3deploy.BucketDeployment(this, "DeploySite", {
       sources: [s3deploy.Source.asset("../frontend/dist")],
