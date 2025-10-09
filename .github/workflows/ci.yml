@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  synth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install infra deps
+        working-directory: infra
+        run: npm ci
+      - name: CDK synth
+        working-directory: infra
+        run: npx cdk synth
+
+  smoke:
+    needs: synth
+    if: ${{ secrets.SMOKE_API_URL && secrets.SMOKE_CLOUDFRONT_URL }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Run smoke tests
+        working-directory: infra
+        env:
+          API_URL: ${{ secrets.SMOKE_API_URL }}
+          CLOUDFRONT_URL: ${{ secrets.SMOKE_CLOUDFRONT_URL }}
+        run: |
+          npm ci
+          npm run smoke
