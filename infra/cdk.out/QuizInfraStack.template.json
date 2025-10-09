@@ -1019,7 +1019,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-446056240677-us-east-1",
-     "S3Key": "9e88dcc46c4688315d06463265de7d9efe0dc525cc363f9fb501312d3a9f9331.zip"
+     "S3Key": "4223613ca49059727067b6cbd3ea70937403f6424c68b0455f71a15ec0dfb7be.zip"
     },
     "Environment": {
      "Variables": {
@@ -1043,7 +1043,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "QuizInfraStack/SubjectsLambda/Resource",
-    "aws:asset:path": "asset.9e88dcc46c4688315d06463265de7d9efe0dc525cc363f9fb501312d3a9f9331",
+    "aws:asset:path": "asset.4223613ca49059727067b6cbd3ea70937403f6424c68b0455f71a15ec0dfb7be",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -1174,7 +1174,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-446056240677-us-east-1",
-     "S3Key": "9e88dcc46c4688315d06463265de7d9efe0dc525cc363f9fb501312d3a9f9331.zip"
+     "S3Key": "4223613ca49059727067b6cbd3ea70937403f6424c68b0455f71a15ec0dfb7be.zip"
     },
     "Environment": {
      "Variables": {
@@ -1198,7 +1198,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "QuizInfraStack/GetQuestionsLambda/Resource",
-    "aws:asset:path": "asset.9e88dcc46c4688315d06463265de7d9efe0dc525cc363f9fb501312d3a9f9331",
+    "aws:asset:path": "asset.4223613ca49059727067b6cbd3ea70937403f6424c68b0455f71a15ec0dfb7be",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
