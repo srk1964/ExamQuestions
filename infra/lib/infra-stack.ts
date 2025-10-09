@@ -56,9 +56,26 @@ export class QuizInfraStack extends cdk.Stack {
       principals: [new iam.CanonicalUserPrincipal(oai.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
     }));
 
-    const distribution = new cloudfront.Distribution(this, "SiteDistribution", {
-      defaultBehavior: { origin: new origins.S3Origin(siteBucket) },
+   const distribution = new cloudfront.Distribution(this, "SiteDistribution", {
+    defaultRootObject: "index.html",
+    defaultBehavior: { origin: new origins.S3Origin(siteBucket, { originAccessIdentity: oai }),
+    },
+      errorResponses: [
+        {
+          httpStatus: 403,
+          responseHttpStatus: 200,
+          responsePagePath: "/index.html",
+          ttl: cdk.Duration.minutes(0),
+        },
+        {
+          httpStatus: 404,
+          responseHttpStatus: 200,
+          responsePagePath: "/index.html",
+          ttl: cdk.Duration.minutes(0),
+        },
+      ],
     });
+
 
     new s3deploy.BucketDeployment(this, "DeploySite", {
       sources: [s3deploy.Source.asset("../frontend/dist")],
