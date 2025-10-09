@@ -39,20 +39,20 @@ export class QuizInfraStack extends cdk.Stack {
       publicReadAccess: false,
     });
 
-      // Create an Origin Access Identity
-    const oai = new cloudfront.OriginAccessIdentity(this, "SiteOAI");
+       // Create an Origin Access Identity
+         const oai = new cloudfront.OriginAccessIdentity(this, "SiteOAI");
 
-   // Grant CloudFront read access
-    siteBucket.addToResourcePolicy(new iam.PolicyStatement({
-      actions: ["s3:GetObject"],
-      resources: [siteBucket.arnForObjects("*")],
-      principals: [new iam.CanonicalUserPrincipal(oai.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
-    }));
+        // Grant CloudFront read access via a bucket policy that references the OAI canonical user
+         siteBucket.addToResourcePolicy(new iam.PolicyStatement({
+        actions: ["s3:GetObject"],
+        resources: [siteBucket.arnForObjects("*")],
+        principals: [new iam.CanonicalUserPrincipal(oai.cloudFrontOriginAccessIdentityS3CanonicalUserId)],
+         }));
 
-   const distribution = new cloudfront.Distribution(this, "SiteDistribution", {
-    defaultRootObject: "index.html",
-    defaultBehavior: { origin: new origins.S3Origin(siteBucket, { originAccessIdentity: oai }),
-    },
+        const distribution = new cloudfront.Distribution(this, "SiteDistribution", {
+         defaultRootObject: "index.html",
+         defaultBehavior: { origin: origins.S3BucketOrigin.withOriginAccessIdentity(siteBucket, { originAccessIdentity: oai }),
+         },
       errorResponses: [
         {
           httpStatus: 403,
@@ -80,7 +80,12 @@ export class QuizInfraStack extends cdk.Stack {
       },
     });
 
-    bucket.grantRead(subjectsLambda);
+    // Grant least-privilege read access to the quiz-content prefix only
+    subjectsLambda.addToRolePolicy(new iam.PolicyStatement({
+      actions: ["s3:GetObject"],
+      resources: [bucket.arnForObjects("quiz-content/*")],
+      effect: iam.Effect.ALLOW,
+    }));
 
 
     const subjects = api.root.addResource("list-subjects");
@@ -109,7 +114,12 @@ export class QuizInfraStack extends cdk.Stack {
       },
     });
 
-    bucket.grantRead(getQuestionsLambda);
+    // Grant least-privilege read access to the quiz-content prefix only
+    getQuestionsLambda.addToRolePolicy(new iam.PolicyStatement({
+      actions: ["s3:GetObject"],
+      resources: [bucket.arnForObjects("quiz-content/*")],
+      effect: iam.Effect.ALLOW,
+    }));
 
     // API Gateway
     const getQuestions = api.root.addResource("get-questions");
@@ -119,6 +129,6 @@ export class QuizInfraStack extends cdk.Stack {
     new cdk.CfnOutput(this, "BucketName", { value: bucket.bucketName });
     new cdk.CfnOutput(this, "ApiUrl", { value: api.url });
     new cdk.CfnOutput(this, "CloudFrontURL", {value: "https://" + distribution.distributionDomainName});
-
+    
   }
 }
