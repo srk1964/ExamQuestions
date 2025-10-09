@@ -118,12 +118,16 @@ export class QuizInfraStack extends cdk.Stack {
     // ApiUrl output declared later
 
 
-    new s3deploy.BucketDeployment(this, "DeploySite", {
+    // Use a deploy hash provided by -c deployHash=... at synth time (CI),
+    // or fall back to a timestamp for local development. This makes the
+    // deployment deterministic when CI computes the hash of frontend/dist.
+    const deployHash = this.node.tryGetContext('deployHash') || new Date().toISOString();
+
+    const deploySite = new s3deploy.BucketDeployment(this, "DeploySite", {
       sources: [
         s3deploy.Source.asset("../frontend/dist"),
-        // Small timestamp source to force a new asset hash when you synth/deploy locally.
-        // This helps ensure CDK's BucketDeployment picks up local changes to `frontend/dist`.
-        s3deploy.Source.data("deploy-timestamp.txt", new Date().toISOString()),
+        // Small deterministic marker so CDK asset hash changes when CI passes deployHash
+        s3deploy.Source.data("deploy-hash.txt", deployHash),
       ],
       destinationBucket: siteBucket,
       distribution,
@@ -172,5 +176,12 @@ export class QuizInfraStack extends cdk.Stack {
       distribution,
       distributionPaths: ["/config.json"],
     });
+    // Ensure config.json is written after the site files so the frontend can fetch it
+    // immediately after site deployment. This prevents races where CI uploads the
+    // site then the config but CloudFront serves the old site.
+    const deployConfig = this.node.tryFindChild('DeployConfig') as s3deploy.BucketDeployment | undefined;
+    if (deployConfig) {
+      deployConfig.node.addDependency(deploySite);
+    }
   }
 }

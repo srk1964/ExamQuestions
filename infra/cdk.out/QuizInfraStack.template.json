@@ -1146,7 +1146,7 @@
     ],
     "SourceObjectKeys": [
      "d4769a58ac1a57ded07da796dfe97006d1e790f8f6c7cf5c8ce7a6caa8509820.zip",
-     "6f08d25d4e81386d5696cb585ae921b55555c526d6409f92fe64ca883e84b275.zip"
+     "99b3d8847c8747c9b11d2848b951236d85976c4ffc8f0a20215014f67b7e5285.zip"
     ],
     "SourceMarkers": [
      {},
@@ -1289,6 +1289,10 @@
     },
     "Description": "/opt/awscli/aws"
    },
+   "DependsOn": [
+    "DeploySiteAwsCliLayer88B0EBE2",
+    "DeploySiteCustomResourceE47C9748"
+   ],
    "Metadata": {
     "aws:cdk:path": "QuizInfraStack/DeployConfig/AwsCliLayer/Resource",
     "aws:asset:path": "asset.c49d356cac773d491c5f7ac148995a1181498a8e289429f8612a7f7e3814f535.zip",
@@ -1337,6 +1341,10 @@
     ],
     "OutputObjectKeys": true
    },
+   "DependsOn": [
+    "DeploySiteAwsCliLayer88B0EBE2",
+    "DeploySiteCustomResourceE47C9748"
+   ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {

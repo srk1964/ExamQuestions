@@ -29,6 +29,15 @@ jobs:
         working-directory: frontend
         run: npm run build
 
+      - name: Compute frontend dist hash
+        working-directory: frontend
+        id: hash
+        run: |
+          # compute a deterministic hash of the built files
+          find dist -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}' > deploy-hash.txt
+          echo "DEPLOY_HASH=$(cat deploy-hash.txt)" >> $GITHUB_OUTPUT
+        shell: bash
+
       - name: Build Lambda
         run: |
           cd infra/lambda/list-subjects
@@ -44,7 +53,8 @@ jobs:
 
       - name: CDK Deploy
         working-directory: infra
-        run: npx cdk deploy --require-approval never
+        run: |
+          npx cdk deploy --require-approval never -c deployHash=${{ steps.hash.outputs.DEPLOY_HASH }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
