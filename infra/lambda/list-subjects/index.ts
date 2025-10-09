@@ -24,7 +24,8 @@ export const handler = async (event: any) => {
     const result = await s3.send(
       new GetObjectCommand({
         Bucket: bucketName,
-        Key: `subjects/${subject}.json`,
+      // quizzes are deployed to the QuizBucket under the prefix `quiz-content/`
+      Key: `quiz-content/${subject}.json`,
       })
     );
 

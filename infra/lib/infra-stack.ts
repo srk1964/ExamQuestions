@@ -76,11 +76,11 @@ export class QuizInfraStack extends cdk.Stack {
         externalModules: ["aws-sdk"],
       },
       environment: {
-        SUBJECTS_BUCKET: siteBucket.bucketName,
+        SUBJECTS_BUCKET: bucket.bucketName,
       },
     });
 
-    siteBucket.grantRead(subjectsLambda);
+    bucket.grantRead(subjectsLambda);
 
 
     const subjects = api.root.addResource("list-subjects");
@@ -105,11 +105,11 @@ export class QuizInfraStack extends cdk.Stack {
         externalModules: ["aws-sdk"],
       },
       environment: {
-        SUBJECTS_BUCKET: siteBucket.bucketName,
+        SUBJECTS_BUCKET: bucket.bucketName,
       },
     });
 
-    siteBucket.grantRead(getQuestionsLambda);
+    bucket.grantRead(getQuestionsLambda);
 
     // API Gateway
     const getQuestions = api.root.addResource("get-questions");

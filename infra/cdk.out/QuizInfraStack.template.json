@@ -995,7 +995,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "SiteBucket397A1860",
+          "QuizBucketC5FC104D",
           "Arn"
          ]
         },
@@ -1005,7 +1005,7 @@
           [
            {
             "Fn::GetAtt": [
-             "SiteBucket397A1860",
+             "QuizBucketC5FC104D",
              "Arn"
             ]
            },
@@ -1034,12 +1034,12 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-446056240677-us-east-1",
-     "S3Key": "4c8c69427889e9e33366e1d4399b4b08123343636234c7f61480c1be5e77d1ed.zip"
+     "S3Key": "9e88dcc46c4688315d06463265de7d9efe0dc525cc363f9fb501312d3a9f9331.zip"
     },
     "Environment": {
      "Variables": {
       "SUBJECTS_BUCKET": {
-       "Ref": "SiteBucket397A1860"
+       "Ref": "QuizBucketC5FC104D"
       }
      }
     },
@@ -1058,7 +1058,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "QuizInfraStack/SubjectsLambda/Resource",
-    "aws:asset:path": "asset.4c8c69427889e9e33366e1d4399b4b08123343636234c7f61480c1be5e77d1ed",
+    "aws:asset:path": "asset.9e88dcc46c4688315d06463265de7d9efe0dc525cc363f9fb501312d3a9f9331",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -1162,7 +1162,7 @@
        "Resource": [
         {
          "Fn::GetAtt": [
-          "SiteBucket397A1860",
+          "QuizBucketC5FC104D",
           "Arn"
          ]
         },
@@ -1172,7 +1172,7 @@
           [
            {
             "Fn::GetAtt": [
-             "SiteBucket397A1860",
+             "QuizBucketC5FC104D",
              "Arn"
             ]
            },
@@ -1201,12 +1201,12 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-446056240677-us-east-1",
-     "S3Key": "4c8c69427889e9e33366e1d4399b4b08123343636234c7f61480c1be5e77d1ed.zip"
+     "S3Key": "9e88dcc46c4688315d06463265de7d9efe0dc525cc363f9fb501312d3a9f9331.zip"
     },
     "Environment": {
      "Variables": {
       "SUBJECTS_BUCKET": {
-       "Ref": "SiteBucket397A1860"
+       "Ref": "QuizBucketC5FC104D"
       }
      }
     },
@@ -1225,7 +1225,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "QuizInfraStack/GetQuestionsLambda/Resource",
-    "aws:asset:path": "asset.4c8c69427889e9e33366e1d4399b4b08123343636234c7f61480c1be5e77d1ed",
+    "aws:asset:path": "asset.9e88dcc46c4688315d06463265de7d9efe0dc525cc363f9fb501312d3a9f9331",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
