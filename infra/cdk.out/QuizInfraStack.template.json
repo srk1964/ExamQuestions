@@ -999,6 +999,16 @@
          ]
         ]
        }
+      },
+      {
+       "Action": "s3:ListBucket",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "QuizBucketC5FC104D",
+         "Arn"
+        ]
+       }
       }
      ],
      "Version": "2012-10-17"

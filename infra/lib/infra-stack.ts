@@ -87,6 +87,12 @@ export class QuizInfraStack extends cdk.Stack {
       effect: iam.Effect.ALLOW,
     }));
 
+    // Allow listing the bucket (required for ListObjectsV2 on the prefix)
+    subjectsLambda.addToRolePolicy(new iam.PolicyStatement({
+      actions: ["s3:ListBucket"],
+      resources: [bucket.bucketArn],
+      effect: iam.Effect.ALLOW,
+    }));
 
     const subjects = api.root.addResource("list-subjects");
   subjects.addMethod("GET", new apigw.LambdaIntegration(subjectsLambda));
