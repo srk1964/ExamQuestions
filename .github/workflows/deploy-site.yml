@@ -31,7 +31,7 @@ jobs:
 
       - name: Build Lambda
         run: |
-          cd lambda/list-subjects
+          cd infra/lambda/list-subjects
           npm ci
           npm run build
 
