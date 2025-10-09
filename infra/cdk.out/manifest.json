@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::446056240677:role/cdk-hnb659fds-deploy-role-446056240677-us-east-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::446056240677:role/cdk-hnb659fds-cfn-exec-role-446056240677-us-east-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-446056240677-us-east-1/2eabff5cd8940a2aa2ff8e529f8b40a67aa4dfad280114ab964f918679062118.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-446056240677-us-east-1/5dcf201e4ddb39d96039432347a2231460b76a6e15f0d6e39ae4526a9aa8c51b.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -34,6 +34,42 @@
         "QuizInfraStack.assets"
       ],
       "metadata": {
+        "/QuizInfraStack": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "If you are relying on AWS SDK v2 to be present in the Lambda environment already, please explicitly configure a NodeJS runtime of Node 16 or lower. [ack: @aws-cdk/aws-lambda-nodejs:sdkV2NotInRuntime]",
+            "trace": [
+              "Annotations.addMessage (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\annotations.js:1:1978)",
+              "Annotations.addWarningV2 (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\aws-cdk-lib\\core\\lib\\annotations.js:1:896)",
+              "new Bundling (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\aws-cdk-lib\\aws-lambda-nodejs\\lib\\bundling.js:1:3909)",
+              "Function.bundle (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\aws-cdk-lib\\aws-lambda-nodejs\\lib\\bundling.js:1:1135)",
+              "new NodejsFunction (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\aws-cdk-lib\\aws-lambda-nodejs\\lib\\function.js:1:2352)",
+              "new QuizInfraStack (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\lib\\infra-stack.ts:71:28)",
+              "Object.<anonymous> (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\bin\\infra.ts:6:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1706:14)",
+              "Module.m._compile (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\ts-node\\src\\index.ts:1618:23)",
+              "node:internal/modules/cjs/loader:1839:10",
+              "Object.require.extensions.<computed> [as .ts] (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\ts-node\\src\\index.ts:1621:12)",
+              "Module.load (node:internal/modules/cjs/loader:1441:32)",
+              "Function._load (node:internal/modules/cjs/loader:1263:12)",
+              "TracingChannel.traceSync (node:diagnostics_channel:322:14)",
+              "wrapModuleLoad (node:internal/modules/cjs/loader:237:24)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)",
+              "phase4 (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\ts-node\\src\\bin.ts:649:14)",
+              "bootstrap (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\ts-node\\src\\bin.ts:95:10)",
+              "main (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\ts-node\\src\\bin.ts:55:10)",
+              "Object.<anonymous> (C:\\Users\\Scott\\OneDrive\\Documents\\GitHub\\ExamQuestions\\infra\\node_modules\\ts-node\\src\\bin.ts:800:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1706:14)",
+              "Object.<anonymous> (node:internal/modules/cjs/loader:1839:10)",
+              "Module.load (node:internal/modules/cjs/loader:1441:32)",
+              "Function._load (node:internal/modules/cjs/loader:1263:12)",
+              "TracingChannel.traceSync (node:diagnostics_channel:322:14)",
+              "wrapModuleLoad (node:internal/modules/cjs/loader:237:24)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)",
+              "node:internal/main/run_main_module:36:49"
+            ]
+          }
+        ],
         "/QuizInfraStack/QuizBucket/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -44,24 +80,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "QuizBucketPolicy8EBBBD89"
-          }
-        ],
-        "/QuizInfraStack/ListSubjectsFn/ServiceRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ListSubjectsFnServiceRole40F40E21"
-          }
-        ],
-        "/QuizInfraStack/ListSubjectsFn/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ListSubjectsFnServiceRoleDefaultPolicyA507F13E"
-          }
-        ],
-        "/QuizInfraStack/ListSubjectsFn/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ListSubjectsFnB02E40C3"
           }
         ],
         "/QuizInfraStack/QuizApi/Resource": [
@@ -85,7 +103,7 @@
         "/QuizInfraStack/QuizApi/Deployment/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "QuizApiDeploymentC8F4119B718d8ed2231cecb31bb0c8406c2089f5"
+            "data": "QuizApiDeploymentC8F4119B572b1432358157b0cfea89e1707ee4c5"
           }
         ],
         "/QuizInfraStack/QuizApi/DeploymentStage.prod/Resource": [
@@ -134,6 +152,36 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "QuizApilistsubjectsGET4D6EEE79"
+          }
+        ],
+        "/QuizInfraStack/QuizApi/Default/get-questions/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuizApigetquestionsD486AB5A"
+          }
+        ],
+        "/QuizInfraStack/QuizApi/Default/get-questions/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuizApigetquestionsOPTIONS1B415E65"
+          }
+        ],
+        "/QuizInfraStack/QuizApi/Default/get-questions/GET/ApiPermission.QuizInfraStackQuizApi605FFD77.GET..get-questions": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuizApigetquestionsGETApiPermissionQuizInfraStackQuizApi605FFD77GETgetquestions374960B0"
+          }
+        ],
+        "/QuizInfraStack/QuizApi/Default/get-questions/GET/ApiPermission.Test.QuizInfraStackQuizApi605FFD77.GET..get-questions": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuizApigetquestionsGETApiPermissionTestQuizInfraStackQuizApi605FFD77GETgetquestions3CC9CA3E"
+          }
+        ],
+        "/QuizInfraStack/QuizApi/Default/get-questions/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuizApigetquestionsGET3BB358FC"
           }
         ],
         "/QuizInfraStack/SeedQuizzes/AwsCliLayer/Resource": [
@@ -208,6 +256,24 @@
             "data": "SiteDistribution3FF9535D"
           }
         ],
+        "/QuizInfraStack/SubjectsLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubjectsLambdaServiceRoleE0C88261"
+          }
+        ],
+        "/QuizInfraStack/SubjectsLambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubjectsLambdaServiceRoleDefaultPolicy33CCD390"
+          }
+        ],
+        "/QuizInfraStack/SubjectsLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubjectsLambda528DB37A"
+          }
+        ],
         "/QuizInfraStack/DeploySite/AwsCliLayer/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -218,6 +284,24 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "DeploySiteCustomResourceE47C9748"
+          }
+        ],
+        "/QuizInfraStack/GetQuestionsLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetQuestionsLambdaServiceRole6E3997AD"
+          }
+        ],
+        "/QuizInfraStack/GetQuestionsLambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetQuestionsLambdaServiceRoleDefaultPolicyD29438E0"
+          }
+        ],
+        "/QuizInfraStack/GetQuestionsLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetQuestionsLambda4F9EF375"
           }
         ],
         "/QuizInfraStack/BucketName": [

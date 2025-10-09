@@ -2,6 +2,8 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import * as lambda from "aws-cdk-lib/aws-lambda";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import * as path from "path";
 import * as apigw from "aws-cdk-lib/aws-apigateway";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
@@ -19,22 +21,12 @@ export class QuizInfraStack extends cdk.Stack {
       enforceSSL: true,
     });
 
-    const listSubjectsFn = new lambda.Function(this, "ListSubjectsFn", {
-      runtime: lambda.Runtime.NODEJS_18_X,
-      handler: "index.handler",
-      code: lambda.Code.fromAsset("../lambda/list-subjects"),
-      environment: { QUIZ_BUCKET: bucket.bucketName },
-    });
-    bucket.grantRead(listSubjectsFn);
-
     const api = new apigw.RestApi(this, "QuizApi", {
       defaultCorsPreflightOptions: {
         allowOrigins: apigw.Cors.ALL_ORIGINS,
         allowMethods: apigw.Cors.ALL_METHODS,
       },
     });
-    api.root.addResource("list-subjects")
-      .addMethod("GET", new apigw.LambdaIntegration(listSubjectsFn));
 
     // Optional: seed an example quiz into quiz-content/ on first deploy
     new s3deploy.BucketDeployment(this, "SeedQuizzes", {
@@ -76,10 +68,13 @@ export class QuizInfraStack extends cdk.Stack {
         },
       ],
     });
-    const subjectsLambda = new lambda.Function(this, "SubjectsLambda", {
+    const subjectsLambda = new NodejsFunction(this, "SubjectsLambda", {
+      entry: path.join(__dirname, "../lambda/list-subjects/index.ts"),
+      handler: "handler",
       runtime: lambda.Runtime.NODEJS_18_X,
-      handler: "index.handler",
-      code: lambda.Code.fromAsset("infra/lambda/list-subjects"), // folder with the code above
+      bundling: {
+        externalModules: ["aws-sdk"],
+      },
       environment: {
         SUBJECTS_BUCKET: siteBucket.bucketName,
       },
@@ -89,11 +84,9 @@ export class QuizInfraStack extends cdk.Stack {
 
 
     const subjects = api.root.addResource("list-subjects");
-    subjects.addMethod("GET", new apigw.LambdaIntegration(subjectsLambda));
+  subjects.addMethod("GET", new apigw.LambdaIntegration(subjectsLambda));
 
-    new cdk.CfnOutput(this, "ApiUrl", {
-      value: api.url,
-    });
+    // ApiUrl output declared later
 
 
     new s3deploy.BucketDeployment(this, "DeploySite", {
@@ -104,10 +97,13 @@ export class QuizInfraStack extends cdk.Stack {
     });
 
     // Lambda
-    const getQuestionsLambda = new lambda.Function(this, "GetQuestionsLambda", {
+    const getQuestionsLambda = new NodejsFunction(this, "GetQuestionsLambda", {
+      entry: path.join(__dirname, "../lambda/list-subjects/index.ts"),
+      handler: "handler",
       runtime: lambda.Runtime.NODEJS_18_X,
-      handler: "index.handler",
-      code: lambda.Code.fromAsset("infra/lambda/list-subjects"),
+      bundling: {
+        externalModules: ["aws-sdk"],
+      },
       environment: {
         SUBJECTS_BUCKET: siteBucket.bucketName,
       },
