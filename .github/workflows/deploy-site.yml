@@ -1,7 +1,5 @@
 name: Deploy Infra and Frontend
 
-name: Deploy Infra and Frontend
-
 on:
   push:
     branches:
