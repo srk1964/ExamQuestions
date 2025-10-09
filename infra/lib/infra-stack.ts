@@ -79,7 +79,7 @@ export class QuizInfraStack extends cdk.Stack {
     const subjectsLambda = new lambda.Function(this, "SubjectsLambda", {
       runtime: lambda.Runtime.NODEJS_18_X,
       handler: "index.handler",
-      code: lambda.Code.fromAsset("lambda/subjects"), // folder with the code above
+      code: lambda.Code.fromAsset("lambda/list-subjects"), // folder with the code above
       environment: {
         SUBJECTS_BUCKET: siteBucket.bucketName,
       },
@@ -107,7 +107,7 @@ export class QuizInfraStack extends cdk.Stack {
     const getQuestionsLambda = new lambda.Function(this, "GetQuestionsLambda", {
       runtime: lambda.Runtime.NODEJS_18_X,
       handler: "index.handler",
-      code: lambda.Code.fromAsset("lambda/get-questions"),
+      code: lambda.Code.fromAsset("lambda/list-subjects"),
       environment: {
         SUBJECTS_BUCKET: siteBucket.bucketName,
       },
