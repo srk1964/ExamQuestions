@@ -3,7 +3,7 @@ name: Deploy Infra and Frontend
 on:
   push:
     branches:
-      - main   # adjust if you deploy from a different branch
+      - main
 
 jobs:
   deploy:
@@ -19,28 +19,22 @@ jobs:
           node-version: 20
 
       # --- Frontend build ---
-      - name: Install dependencies (frontend)
+      - name: Clean install dependencies (frontend)
         working-directory: frontend
         run: |
-          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ] || [ -f yarn.lock ]; then
-            npm ci
-          else
-            npm install
-          fi
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Build frontend
         working-directory: frontend
         run: npm run build
 
       # --- Infra deploy ---
-      - name: Install dependencies (infra)
+      - name: Clean install dependencies (infra)
         working-directory: infra
         run: |
-          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ] || [ -f yarn.lock ]; then
-            npm ci
-          else
-            npm install
-          fi
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: CDK Deploy
         working-directory: infra
