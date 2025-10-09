@@ -16,27 +16,47 @@ function App() {
   useEffect(() => {
     // Fetch config.json from the root of the site
     fetch("/config.json")
-      .then((res) => res.json())
-      .then((data) => setConfig(data))
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`config.json returned ${res.status}`);
+        try {
+          const data = await res.json();
+          setConfig(data);
+        } catch (err) {
+          // If the file isn't valid JSON (for example CloudFront returned index.html), surface that
+          console.error("Failed to parse config.json:", err);
+          throw new Error("Invalid config.json (not JSON)");
+        }
+      })
       .catch((err) => {
         console.error("Failed to load config:", err);
-        setError("Failed to load app configuration");
+        setError("Failed to load app configuration: " + String(err));
       });
   }, []);
 
   useEffect(() => {
     if (!config) return;
     setLoadingSubjects(true);
-    const url = `${config.VITE_API_URL}/list-subjects`;
+    const url = `${config.VITE_API_URL.replace(/\/$/, "")}/list-subjects`;
     fetch(url)
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`list-subjects returned ${res.status}`);
+        }
+        try {
+          const data = await res.json();
+          return data;
+        } catch (err) {
+          console.error("Failed to parse list-subjects response:", err);
+          throw new Error("Invalid JSON from list-subjects");
+        }
+      })
       .then((data) => {
-        setSubjects(data || []);
+        setSubjects(Array.isArray(data) ? data : []);
         setLoadingSubjects(false);
       })
       .catch((err) => {
         console.error("Error fetching subjects:", err);
-        setError("Failed to load subjects");
+        setError("Failed to load subjects: " + String(err));
         setLoadingSubjects(false);
       });
   }, [config]);
