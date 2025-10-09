@@ -135,6 +135,16 @@ export class QuizInfraStack extends cdk.Stack {
     new cdk.CfnOutput(this, "BucketName", { value: bucket.bucketName });
     new cdk.CfnOutput(this, "ApiUrl", { value: api.url });
     new cdk.CfnOutput(this, "CloudFrontURL", {value: "https://" + distribution.distributionDomainName});
-    
+
+    // deploy a config file to the site bucket
+    new s3deploy.BucketDeployment(this, "DeployConfig", {
+      sources: [
+        s3deploy.Source.data(
+          "config.json",
+          JSON.stringify({ VITE_API_URL: api.url })
+        ),
+      ],
+      destinationBucket: siteBucket,
+    });
   }
 }
