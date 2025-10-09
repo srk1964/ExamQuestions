@@ -17,29 +17,30 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'
-
-      - name: Install dependencies (frontend)
-        working-directory: frontend
-        run: npm install
-
-      - name: Install dependencies (infra)
-        working-directory: infra
-        run: npm install
 
       # --- Frontend build ---
-      - name: Install ci dependencies (frontend)
+      - name: Install dependencies (frontend)
         working-directory: frontend
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ] || [ -f yarn.lock ]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: Build frontend
         working-directory: frontend
         run: npm run build
 
       # --- Infra deploy ---
-      - name: Install ci dependencies (infra)
+      - name: Install dependencies (infra)
         working-directory: infra
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ] || [ -f yarn.lock ]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: CDK Deploy
         working-directory: infra
