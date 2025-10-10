@@ -1,0 +1,85 @@
+{
+    "subject": "Security",
+    "questions": [
+      {
+        "id": "q31",
+        "type": "mcq",
+        "prompt": "Which AWS service helps manage multiple accounts with consolidated billing?",
+        "options": ["IAM", "Organizations", "Control Tower", "Config"],
+        "correctAnswer": "Organizations",
+        "explanation": "AWS Organizations manages multiple accounts centrally."
+      },
+      {
+        "id": "q32",
+        "type": "mcq",
+        "prompt": "Which IAM entity is best for granting temporary access to AWS resources?",
+        "options": ["IAM User", "IAM Group", "IAM Role", "Root Account"],
+        "correctAnswer": "IAM Role",
+        "explanation": "IAM Roles provide temporary credentials."
+      },
+      {
+        "id": "q33",
+        "type": "mcq",
+        "prompt": "Which service provides automated compliance checks against best practices?",
+        "options": ["CloudTrail", "Config", "Inspector", "Trusted Advisor"],
+        "correctAnswer": "Trusted Advisor",
+        "explanation": "Trusted Advisor checks for best practices and compliance."
+      },
+      {
+        "id": "q34",
+        "type": "mcq",
+        "prompt": "Which service records all API calls made in your AWS account?",
+        "options": ["CloudWatch", "CloudTrail", "Config", "Inspector"],
+        "correctAnswer": "CloudTrail",
+        "explanation": "CloudTrail logs all API activity."
+      },
+      {
+        "id": "q35",
+        "type": "mcq",
+        "prompt": "Which AWS service provides encryption key management?",
+        "options": ["KMS", "Secrets Manager", "IAM", "Shield"],
+        "correctAnswer": "KMS",
+        "explanation": "AWS KMS manages encryption keys."
+      },
+      {
+        "id": "q36",
+        "type": "mcq",
+        "prompt": "Which service protects against DDoS attacks?",
+        "options": ["Shield", "WAF", "GuardDuty", "Inspector"],
+        "correctAnswer": "Shield",
+        "explanation": "AWS Shield provides DDoS protection."
+      },
+      {
+        "id": "q37",
+        "type": "mcq",
+        "prompt": "Which service provides intelligent threat detection?",
+        "options": ["GuardDuty", "Inspector", "Macie", "Shield"],
+        "correctAnswer": "GuardDuty",
+        "explanation": "Amazon GuardDuty detects threats using machine learning."
+      },
+      {
+        "id": "q38",
+        "type": "mcq",
+        "prompt": "Which service helps discover and protect sensitive data in S3?",
+        "options": ["Macie", "GuardDuty", "Inspector", "Config"],
+        "correctAnswer": "Macie",
+        "explanation": "Amazon Macie uses ML to discover sensitive data."
+      },
+      {
+        "id": "q39",
+        "type": "mcq",
+        "prompt": "Which service helps rotate, manage, and retrieve database credentials securely?",
+        "options": ["Secrets Manager", "KMS", "IAM", "Config"],
+        "correctAnswer": "Secrets Manager",
+        "explanation": "AWS Secrets Manager manages secrets and credentials."
+      },
+      {
+        "id": "q40",
+        "type": "mcq",
+        "prompt": "Which service provides a managed firewall for web applications?",
+        "options": ["Shield", "WAF", "GuardDuty", "Inspector"],
+        "correctAnswer": "WAF",
+        "explanation": "AWS WAF protects web applications from common exploits."
+      }
+    ]
+  }

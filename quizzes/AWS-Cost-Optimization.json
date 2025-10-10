@@ -1,0 +1,85 @@
+{
+    "subject": "Cost Optimization",
+    "questions": [
+      {
+        "id": "q61",
+        "type": "mcq",
+        "prompt": "Which EC2 pricing model provides the lowest cost but can be interrupted?",
+        "options": ["On-Demand", "Reserved Instances", "Spot Instances", "Dedicated Hosts"],
+        "correctAnswer": "Spot Instances",
+        "explanation": "Spot Instances are the cheapest but can be reclaimed by AWS."
+      },
+      {
+        "id": "q62",
+        "type": "mcq",
+        "prompt": "Which AWS service provides recommendations for cost savings?",
+        "options": ["Trusted Advisor", "Config", "CloudTrail", "Inspector"],
+        "correctAnswer": "Trusted Advisor",
+        "explanation": "Trusted Advisor provides cost optimization checks."
+      },
+      {
+        "id": "q63",
+        "type": "mcq",
+        "prompt": "Which pricing option is best for workloads with predictable usage?",
+        "options": ["On-Demand", "Reserved Instances", "Spot Instances", "Savings Plans"],
+        "correctAnswer": "Reserved Instances",
+        "explanation": "Reserved Instances provide discounts for predictable workloads."
+      },
+      {
+        "id": "q64",
+        "type": "mcq",
+        "prompt": "Which service allows you to analyze and visualize AWS costs?",
+        "options": ["Cost Explorer", "Trusted Advisor", "CloudWatch", "Config"],
+        "correctAnswer": "Cost Explorer",
+        "explanation": "Cost Explorer provides cost and usage analysis."
+      },
+      {
+        "id": "q65",
+        "type": "mcq",
+        "prompt": "Which pricing model provides flexible discounts across multiple services?",
+        "options": ["Savings Plans", "Reserved Instances", "Spot Instances", "On-Demand"],
+        "correctAnswer": "Savings Plans",
+        "explanation": "Savings Plans provide flexible discounts across compute services."
+      },
+      {
+        "id": "q66",
+        "type": "mcq",
+        "prompt": "Which service provides detailed billing and usage reports?",
+        "options": ["Cost and Usage Report", "Cost Explorer", "Trusted Advisor", "CloudTrail"],
+        "correctAnswer": "Cost and Usage Report",
+        "explanation": "The CUR provides detailed billing data."
+      },
+      {
+        "id": "q67",
+        "type": "mcq",
+        "prompt": "Which service allows setting budgets and receiving alerts?",
+        "options": ["AWS Budgets", "Cost Explorer", "Trusted Advisor", "Config"],
+        "correctAnswer": "AWS Budgets",
+        "explanation": "AWS Budgets lets you set custom cost and usage budgets."
+      },
+      {
+        "id": "q68",
+        "type": "mcq",
+        "prompt": "Which storage class is most cost-effective for infrequently accessed data?",
+        "options": ["S3 Standard", "S3 Standard-IA", "S3 Glacier", "S3 Intelligent-Tiering"],
+        "correctAnswer": "S3 Standard-IA",
+        "explanation": "S3 Standard-IA is cheaper for infrequently accessed data."
+      },
+      {
+        "id": "q69",
+        "type": "mcq",
+        "prompt": "Which service helps identify underutilized EC2 instances?",
+        "options": ["Trusted Advisor", "CloudWatch", "Config", "Inspector"],
+        "correctAnswer": "Trusted Advisor",
+        "explanation": "Trusted Advisor highlights underutilized resources."
+      },
+      {
+        "id": "q70",
+        "type": "mcq",
+        "prompt": "Which pricing model is best for short-term, unpredictable workloads?",
+        "options": ["On-Demand", "Reserved Instances", "Savings Plans", "Dedicated Hosts"],
+        "correctAnswer": "On-Demand",
+        "explanation": "On-Demand is flexible for unpredictable workloads."
+      }
+    ]
+  }

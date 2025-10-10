@@ -1,0 +1,85 @@
+ {
+    "subject": "Migration & Hybrid",
+    "questions": [
+      {
+        "id": "q71",
+        "type": "mcq",
+        "prompt": "Which service helps migrate databases to AWS with minimal downtime?",
+        "options": ["AWS DMS", "AWS Glue", "AWS DataSync", "Snowball"],
+        "correctAnswer": "AWS DMS",
+        "explanation": "Database Migration Service migrates databases efficiently."
+      },
+      {
+        "id": "q72",
+        "type": "mcq",
+        "prompt": "Which service helps migrate large datasets using physical devices?",
+        "options": ["Snowball", "DataSync", "DMS", "Glue"],
+        "correctAnswer": "Snowball",
+        "explanation": "AWS Snowball is a physical device for data transfer."
+      },
+      {
+        "id": "q73",
+        "type": "mcq",
+        "prompt": "Which service automates data transfer between on-premises and AWS?",
+        "options": ["DataSync", "Snowball", "DMS", "Glue"],
+        "correctAnswer": "DataSync",
+        "explanation": "AWS DataSync automates data transfer at scale."
+      },
+      {
+        "id": "q74",
+        "type": "mcq",
+        "prompt": "Which service provides a landing zone for multi-account AWS environments?",
+        "options": ["Control Tower", "Organizations", "Config", "CloudFormation"],
+        "correctAnswer": "Control Tower",
+        "explanation": "AWS Control Tower sets up a secure multi-account environment."
+      },
+      {
+        "id": "q75",
+        "type": "mcq",
+        "prompt": "Which service helps migrate virtual machines to AWS?",
+        "options": ["Application Migration Service", "DataSync", "Snowball", "Glue"],
+        "correctAnswer": "Application Migration Service",
+        "explanation": "AWS Application Migration Service migrates VMs to AWS."
+      },
+      {
+        "id": "q76",
+        "type": "mcq",
+        "prompt": "Which service provides hybrid cloud storage integration?",
+        "options": ["Storage Gateway", "EFS", "S3", "Snowball"],
+        "correctAnswer": "Storage Gateway",
+        "explanation": "AWS Storage Gateway integrates on-premises with AWS storage."
+      },
+      {
+        "id": "q77",
+        "type": "mcq",
+        "prompt": "Which service provides a consistent hybrid cloud experience with VMware?",
+        "options": ["VMware Cloud on AWS", "Outposts", "Snowball", "DataSync"],
+        "correctAnswer": "VMware Cloud on AWS",
+        "explanation": "VMware Cloud on AWS integrates VMware with AWS infrastructure."
+      },
+      {
+        "id": "q78",
+        "type": "mcq",
+        "prompt": "Which service brings AWS infrastructure and services on-premises?",
+        "options": ["Outposts", "Snowball", "DataSync", "Control Tower"],
+        "correctAnswer": "Outposts",
+        "explanation": "AWS Outposts extends AWS services to on-premises."
+      },
+      {
+        "id": "q79",
+        "type": "mcq",
+        "prompt": "Which service helps migrate applications with minimal code changes?",
+        "options": ["Elastic Beanstalk", "Application Migration Service", "DataSync", "Snowball"],
+        "correctAnswer": "Elastic Beanstalk",
+        "explanation": "Elastic Beanstalk simplifies application deployment and migration."
+      },
+      {
+        "id": "q80",
+        "type": "mcq",
+        "prompt": "Which service provides guidance and tools for cloud migration projects?",
+        "options": ["Migration Hub", "Control Tower", "DataSync", "Snowball"],
+        "correctAnswer": "Migration Hub",
+        "explanation": "AWS Migration Hub centralizes migration tracking and guidance."
+      }
+    ]
+  }

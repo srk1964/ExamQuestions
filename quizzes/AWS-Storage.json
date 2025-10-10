@@ -1,0 +1,85 @@
+{
+    "subject": "Storage",
+    "questions": [
+      {
+        "id": "q21",
+        "type": "mcq",
+        "prompt": "Which S3 storage class is best for archival with retrieval times of hours?",
+        "options": ["S3 Standard", "S3 Glacier", "S3 One Zone-IA", "S3 Intelligent-Tiering"],
+        "correctAnswer": "S3 Glacier",
+        "explanation": "S3 Glacier is designed for archival."
+      },
+      {
+        "id": "q22",
+        "type": "mcq",
+        "prompt": "Which service provides a scalable file system for Linux workloads?",
+        "options": ["EBS", "EFS", "S3", "Storage Gateway"],
+        "correctAnswer": "EFS",
+        "explanation": "Amazon EFS is a managed file system."
+      },
+      {
+        "id": "q23",
+        "type": "mcq",
+        "prompt": "Which service provides block storage for EC2?",
+        "options": ["EBS", "EFS", "S3", "Glacier"],
+        "correctAnswer": "EBS",
+        "explanation": "Amazon EBS provides persistent block storage."
+      },
+      {
+        "id": "q24",
+        "type": "mcq",
+        "prompt": "Which S3 feature allows automatic replication of objects across regions?",
+        "options": ["Cross-Region Replication", "Lifecycle Policies", "Versioning", "Transfer Acceleration"],
+        "correctAnswer": "Cross-Region Replication",
+        "explanation": "CRR replicates objects across AWS regions."
+      },
+      {
+        "id": "q25",
+        "type": "mcq",
+        "prompt": "Which service provides hybrid cloud storage integration?",
+        "options": ["Storage Gateway", "EFS", "S3", "EBS"],
+        "correctAnswer": "Storage Gateway",
+        "explanation": "AWS Storage Gateway integrates on-premises with AWS storage."
+      },
+      {
+        "id": "q26",
+        "type": "mcq",
+        "prompt": "Which S3 feature allows multiple versions of an object to be stored?",
+        "options": ["Replication", "Versioning", "Lifecycle", "Encryption"],
+        "correctAnswer": "Versioning",
+        "explanation": "Versioning keeps multiple versions of an object."
+      },
+      {
+        "id": "q27",
+        "type": "mcq",
+        "prompt": "Which service provides a petabyte-scale data transfer appliance?",
+        "options": ["Snowball", "Storage Gateway", "EFS", "S3 Transfer Acceleration"],
+        "correctAnswer": "Snowball",
+        "explanation": "AWS Snowball is a physical device for large data transfers."
+      },
+      {
+        "id": "q28",
+        "type": "mcq",
+        "prompt": "Which S3 feature reduces latency by caching content closer to users?",
+        "options": ["Transfer Acceleration", "Cross-Region Replication", "Lifecycle Policies", "Versioning"],
+        "correctAnswer": "Transfer Acceleration",
+        "explanation": "S3 Transfer Acceleration uses CloudFront edge locations."
+      },
+      {
+        "id": "q29",
+        "type": "mcq",
+        "prompt": "Which storage option is best for high-performance databases on EC2?",
+        "options": ["EBS Provisioned IOPS SSD", "EFS", "S3", "Glacier"],
+        "correctAnswer": "EBS Provisioned IOPS SSD",
+        "explanation": "Provisioned IOPS SSD volumes are optimized for databases."
+      },
+      {
+        "id": "q30",
+        "type": "mcq",
+        "prompt": "Which service provides exabyte-scale data transfer via a shipping container?",
+        "options": ["Snowball", "Snowmobile", "Storage Gateway", "DataSync"],
+        "correctAnswer": "Snowmobile",
+        "explanation": "AWS Snowmobile is a truck-sized data transfer service."
+      }
+    ]
+  }

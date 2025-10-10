@@ -1,0 +1,85 @@
+{
+    "subject": "Monitoring & Logging",
+    "questions": [
+      {
+        "id": "q51",
+        "type": "mcq",
+        "prompt": "Which AWS service collects and monitors metrics from AWS resources?",
+        "options": ["CloudTrail", "CloudWatch", "Config", "Trusted Advisor"],
+        "correctAnswer": "CloudWatch",
+        "explanation": "CloudWatch monitors metrics and logs."
+      },
+      {
+        "id": "q52",
+        "type": "mcq",
+        "prompt": "Which service records all API calls in your AWS account?",
+        "options": ["CloudTrail", "CloudWatch", "Config", "Inspector"],
+        "correctAnswer": "CloudTrail",
+        "explanation": "CloudTrail logs API activity."
+      },
+      {
+        "id": "q53",
+        "type": "mcq",
+        "prompt": "Which service provides a history of AWS resource configuration changes?",
+        "options": ["CloudTrail", "CloudWatch", "Config", "Trusted Advisor"],
+        "correctAnswer": "Config",
+        "explanation": "AWS Config tracks configuration changes."
+      },
+      {
+        "id": "q54",
+        "type": "mcq",
+        "prompt": "Which service provides automated security assessments of EC2 instances?",
+        "options": ["Inspector", "GuardDuty", "Macie", "Shield"],
+        "correctAnswer": "Inspector",
+        "explanation": "Amazon Inspector scans EC2 instances for vulnerabilities."
+      },
+      {
+        "id": "q55",
+        "type": "mcq",
+        "prompt": "Which service provides real-time monitoring dashboards?",
+        "options": ["CloudWatch", "CloudTrail", "Config", "Trusted Advisor"],
+        "correctAnswer": "CloudWatch",
+        "explanation": "CloudWatch provides dashboards for metrics and alarms."
+      },
+      {
+        "id": "q56",
+        "type": "mcq",
+        "prompt": "Which service provides recommendations for cost optimization and performance?",
+        "options": ["Trusted Advisor", "Config", "CloudTrail", "Inspector"],
+        "correctAnswer": "Trusted Advisor",
+        "explanation": "Trusted Advisor provides best practice checks."
+      },
+      {
+        "id": "q57",
+        "type": "mcq",
+        "prompt": "Which service allows you to set alarms on metrics?",
+        "options": ["CloudWatch", "CloudTrail", "Config", "Inspector"],
+        "correctAnswer": "CloudWatch",
+        "explanation": "CloudWatch Alarms notify you when thresholds are breached."
+      },
+      {
+        "id": "q58",
+        "type": "mcq",
+        "prompt": "Which service provides centralized logging across multiple accounts?",
+        "options": ["CloudWatch Logs", "CloudTrail", "Config", "CloudWatch Logs Insights"],
+        "correctAnswer": "CloudWatch Logs",
+        "explanation": "CloudWatch Logs aggregates logs from multiple sources."
+      },
+      {
+        "id": "q59",
+        "type": "mcq",
+        "prompt": "Which service allows querying logs with a SQL-like language?",
+        "options": ["CloudWatch Logs Insights", "CloudTrail", "Config", "Athena"],
+        "correctAnswer": "CloudWatch Logs Insights",
+        "explanation": "Logs Insights allows interactive log queries."
+      },
+      {
+        "id": "q60",
+        "type": "mcq",
+        "prompt": "Which service provides anomaly detection for metrics?",
+        "options": ["CloudWatch", "CloudTrail", "Config", "Inspector"],
+        "correctAnswer": "CloudWatch",
+        "explanation": "CloudWatch Anomaly Detection uses ML to detect unusual patterns."
+      }
+    ]
+  }
