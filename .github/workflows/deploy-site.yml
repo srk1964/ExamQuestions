@@ -51,11 +51,90 @@ jobs:
           rm -rf node_modules package-lock.json
           npm install
 
-      - name: CDK Deploy
+      - name: Wait for CloudFormation stack to be ready
         working-directory: infra
-        run: |
-          npx cdk deploy --require-approval never -c deployHash=${{ steps.hash.outputs.DEPLOY_HASH }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
+        run: |
+          # Poll CloudFormation stack status and wait until it is in a stable state.
+          # This avoids starting a deployment while a previous update is still in progress.
+          STACK_NAME=QuizInfraStack
+          MAX_ATTEMPTS=30
+          SLEEP_SECONDS=10
+
+          attempt=0
+          while [ $attempt -lt $MAX_ATTEMPTS ]; do
+            status=$(aws cloudformation describe-stacks --stack-name "$STACK_NAME" --query "Stacks[0].StackStatus" --output text 2>/dev/null || echo "NO_STACK")
+            echo "CloudFormation stack status: $status"
+
+            case "$status" in
+              NO_STACK|CREATE_COMPLETE|UPDATE_COMPLETE|ROLLBACK_COMPLETE|UPDATE_ROLLBACK_COMPLETE|DELETE_COMPLETE)
+                echo "Stack is in a stable state: $status"
+                exit 0
+                ;;
+              *)
+                echo "Stack is in transient state (waiting): $status"
+                attempt=$((attempt+1))
+                sleep $SLEEP_SECONDS
+                ;;
+            esac
+          done
+
+          echo "Timed out waiting for CloudFormation to become stable after $((MAX_ATTEMPTS * SLEEP_SECONDS)) seconds"
+          exit 1
+
+      - name: CDK Deploy
+        working-directory: infra
+        run: |
+          # Retry deploy a couple times to tolerate brief races where the stack leaves UPDATE_IN_PROGRESS
+          set -e
+          MAX_RETRIES=2
+          RETRY_DELAY=5
+          i=0
+          until [ $i -gt $MAX_RETRIES ]
+          do
+            if npx cdk deploy --require-approval never -c deployHash=${{ steps.hash.outputs.DEPLOY_HASH }}; then
+              echo 'CDK deploy succeeded'
+              break
+            fi
+            i=$((i+1))
+            echo "CDK deploy failed, retrying in ${RETRY_DELAY}s... (attempt: $i)"
+            sleep $RETRY_DELAY
+          done
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+
+      - name: Ensure runtime config.json is present and invalidated
+        working-directory: infra
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+        run: |
+          set -e
+          STACK_NAME=QuizInfraStack
+
+          echo "Retrieving ApiUrl output from CloudFormation"
+          API_URL=$(aws cloudformation describe-stacks --stack-name "$STACK_NAME" --query "Stacks[0].Outputs[?OutputKey=='ApiUrl'].OutputValue" --output text)
+          echo "ApiUrl=$API_URL"
+
+          echo "Locating SiteBucket logical resource"
+          SITE_BUCKET=$(aws cloudformation list-stack-resources --stack-name "$STACK_NAME" --query "StackResourceSummaries[?LogicalResourceId=='SiteBucket'].PhysicalResourceId" --output text)
+          echo "Site bucket: $SITE_BUCKET"
+
+          echo "Locating CloudFront distribution physical id"
+          DIST_ID=$(aws cloudformation list-stack-resources --stack-name "$STACK_NAME" --query "StackResourceSummaries[?LogicalResourceId=='SiteDistribution'].PhysicalResourceId" --output text)
+          echo "Distribution id: $DIST_ID"
+
+          # Write config.json locally
+          echo "{\"VITE_API_URL\": \"${API_URL}\"}" > config.json
+
+          # Upload with correct metadata so CloudFront and browsers see application/json and no-cache
+          aws s3 cp config.json s3://${SITE_BUCKET}/config.json --content-type application/json --cache-control no-cache
+
+          # Invalidate CloudFront path for config.json so the new file is served immediately
+          aws cloudfront create-invalidation --distribution-id ${DIST_ID} --paths "/config.json"
