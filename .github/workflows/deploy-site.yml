@@ -138,3 +138,4 @@ jobs:
 
           # Invalidate CloudFront path for config.json so the new file is served immediately
           aws cloudfront create-invalidation --distribution-id ${DIST_ID} --paths "/config.json"
+          
