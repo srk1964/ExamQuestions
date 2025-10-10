@@ -1,0 +1,85 @@
+{
+    "subject": "Databases",
+    "questions": [
+      {
+        "id": "q41",
+        "type": "mcq",
+        "prompt": "Which AWS database service is fully managed and supports both MySQL and PostgreSQL engines?",
+        "options": ["Amazon Aurora", "Amazon DynamoDB", "Amazon Redshift", "Amazon Neptune"],
+        "correctAnswer": "Amazon Aurora",
+        "explanation": "Aurora is a fully managed relational database compatible with MySQL and PostgreSQL."
+      },
+      {
+        "id": "q42",
+        "type": "mcq",
+        "prompt": "Which database service is best for key-value and document workloads at scale?",
+        "options": ["Amazon RDS", "Amazon DynamoDB", "Amazon Redshift", "Amazon Aurora"],
+        "correctAnswer": "Amazon DynamoDB",
+        "explanation": "DynamoDB is a NoSQL database with millisecond latency."
+      },
+      {
+        "id": "q43",
+        "type": "mcq",
+        "prompt": "Which service is optimized for data warehousing and analytics?",
+        "options": ["Amazon RDS", "Amazon DynamoDB", "Amazon Redshift", "Amazon Aurora"],
+        "correctAnswer": "Amazon Redshift",
+        "explanation": "Redshift is AWS’s data warehouse service."
+      },
+      {
+        "id": "q44",
+        "type": "mcq",
+        "prompt": "Which database service is graph-based and optimized for relationships?",
+        "options": ["Amazon Neptune", "Amazon Aurora", "Amazon DynamoDB", "Amazon RDS"],
+        "correctAnswer": "Amazon Neptune",
+        "explanation": "Neptune is a graph database service."
+      },
+      {
+        "id": "q45",
+        "type": "mcq",
+        "prompt": "Which RDS feature provides automatic failover for high availability?",
+        "options": ["Read Replicas", "Multi-AZ Deployment", "Aurora Global Database", "Cross-Region Replication"],
+        "correctAnswer": "Multi-AZ Deployment",
+        "explanation": "Multi-AZ provides high availability with automatic failover."
+      },
+      {
+        "id": "q46",
+        "type": "mcq",
+        "prompt": "Which database service is best for caching frequently accessed data?",
+        "options": ["Amazon ElastiCache", "Amazon Aurora", "Amazon DynamoDB", "Amazon Redshift"],
+        "correctAnswer": "Amazon ElastiCache",
+        "explanation": "ElastiCache supports Redis and Memcached for caching."
+      },
+      {
+        "id": "q47",
+        "type": "mcq",
+        "prompt": "Which RDS feature allows scaling read traffic?",
+        "options": ["Read Replicas", "Multi-AZ Deployment", "Aurora Serverless", "Cross-Region Replication"],
+        "correctAnswer": "Read Replicas",
+        "explanation": "Read Replicas offload read traffic from the primary database."
+      },
+      {
+        "id": "q48",
+        "type": "mcq",
+        "prompt": "Which Aurora feature allows global distribution of a database?",
+        "options": ["Aurora Global Database", "Multi-AZ Deployment", "Read Replicas", "Cross-Region Replication"],
+        "correctAnswer": "Aurora Global Database",
+        "explanation": "Aurora Global Database replicates across regions with low latency."
+      },
+      {
+        "id": "q49",
+        "type": "mcq",
+        "prompt": "Which service is best for migrating databases to AWS?",
+        "options": ["AWS DMS", "AWS Glue", "AWS DataSync", "AWS Snowball"],
+        "correctAnswer": "AWS DMS",
+        "explanation": "Database Migration Service helps migrate databases with minimal downtime."
+      },
+      {
+        "id": "q50",
+        "type": "mcq",
+        "prompt": "Which service provides a serverless relational database option?",
+        "options": ["Aurora Serverless", "Amazon RDS", "Amazon DynamoDB", "Amazon Redshift"],
+        "correctAnswer": "Aurora Serverless",
+        "explanation": "Aurora Serverless automatically scales capacity up or down."
+      }
+    ]
+  }

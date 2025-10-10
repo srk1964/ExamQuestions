@@ -1,0 +1,85 @@
+{
+    "subject": "Networking",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "mcq",
+        "prompt": "Which AWS service provides a dedicated private connection from on-premises to AWS?",
+        "options": ["AWS VPN", "AWS Direct Connect", "VPC Peering", "Transit Gateway"],
+        "correctAnswer": "AWS Direct Connect",
+        "explanation": "Direct Connect establishes a dedicated private connection."
+      },
+      {
+        "id": "q2",
+        "type": "mcq",
+        "prompt": "Which VPC component controls inbound and outbound traffic at the subnet level?",
+        "options": ["Security Group", "NACL", "Route Table", "Internet Gateway"],
+        "correctAnswer": "NACL",
+        "explanation": "Network ACLs operate at the subnet level."
+      },
+      {
+        "id": "q3",
+        "type": "mcq",
+        "prompt": "Which AWS service enables global DNS resolution?",
+        "options": ["CloudFront", "Route 53", "Global Accelerator", "Direct Connect"],
+        "correctAnswer": "Route 53",
+        "explanation": "Amazon Route 53 is AWS’s DNS service."
+      },
+      {
+        "id": "q4",
+        "type": "mcq",
+        "prompt": "Which service accelerates traffic globally using AWS edge locations?",
+        "options": ["CloudFront", "Route 53", "Global Accelerator", "Direct Connect"],
+        "correctAnswer": "Global Accelerator",
+        "explanation": "Global Accelerator improves performance by routing via AWS global network."
+      },
+      {
+        "id": "q5",
+        "type": "mcq",
+        "prompt": "Which gateway enables communication between a VPC and the internet?",
+        "options": ["NAT Gateway", "Internet Gateway", "Transit Gateway", "VPC Endpoint"],
+        "correctAnswer": "Internet Gateway",
+        "explanation": "Internet Gateway allows internet access for VPC resources."
+      },
+      {
+        "id": "q6",
+        "type": "mcq",
+        "prompt": "Which AWS service allows private connectivity to AWS services without using the internet?",
+        "options": ["VPC Endpoint", "Internet Gateway", "NAT Gateway", "Direct Connect"],
+        "correctAnswer": "VPC Endpoint",
+        "explanation": "VPC Endpoints provide private access to AWS services."
+      },
+      {
+        "id": "q7",
+        "type": "mcq",
+        "prompt": "Which routing table entry allows all outbound internet traffic?",
+        "options": ["0.0.0.0/0", "10.0.0.0/16", "192.168.0.0/24", "::/0"],
+        "correctAnswer": "0.0.0.0/0",
+        "explanation": "0.0.0.0/0 is the default route for all IPv4 traffic."
+      },
+      {
+        "id": "q8",
+        "type": "mcq",
+        "prompt": "Which AWS service provides a managed VPN solution?",
+        "options": ["AWS VPN", "Direct Connect", "Transit Gateway", "CloudFront"],
+        "correctAnswer": "AWS VPN",
+        "explanation": "AWS VPN establishes secure tunnels between on-premises and AWS."
+      },
+      {
+        "id": "q9",
+        "type": "mcq",
+        "prompt": "Which AWS service allows inter-VPC connectivity across accounts?",
+        "options": ["VPC Peering", "Transit Gateway", "Direct Connect", "VPN"],
+        "correctAnswer": "Transit Gateway",
+        "explanation": "Transit Gateway simplifies inter-VPC and hybrid connectivity."
+      },
+      {
+        "id": "q10",
+        "type": "mcq",
+        "prompt": "Which AWS service caches content at edge locations?",
+        "options": ["CloudFront", "Route 53", "Global Accelerator", "Direct Connect"],
+        "correctAnswer": "CloudFront",
+        "explanation": "CloudFront is AWS’s CDN service."
+      }
+    ]
+ }

@@ -1,0 +1,85 @@
+{
+    "subject": "High Availability & Reliability",
+    "questions": [
+      {
+        "id": "q81",
+        "type": "mcq",
+        "prompt": "Which AWS service automatically distributes incoming traffic across multiple targets?",
+        "options": ["CloudFront", "Route 53", "Elastic Load Balancing", "Auto Scaling"],
+        "correctAnswer": "Elastic Load Balancing",
+        "explanation": "ELB distributes traffic across multiple instances or containers."
+      },
+      {
+        "id": "q82",
+        "type": "mcq",
+        "prompt": "Which AWS feature allows automatic scaling of EC2 instances based on demand?",
+        "options": ["Elastic Load Balancing", "Auto Scaling", "CloudWatch", "Trusted Advisor"],
+        "correctAnswer": "Auto Scaling",
+        "explanation": "Auto Scaling adjusts capacity automatically to maintain performance."
+      },
+      {
+        "id": "q83",
+        "type": "mcq",
+        "prompt": "Which AWS service provides a global content delivery network?",
+        "options": ["CloudFront", "Route 53", "Global Accelerator", "Direct Connect"],
+        "correctAnswer": "CloudFront",
+        "explanation": "CloudFront caches and delivers content globally."
+      },
+      {
+        "id": "q84",
+        "type": "mcq",
+        "prompt": "Which AWS service improves application availability by routing traffic to healthy endpoints?",
+        "options": ["Route 53", "CloudFront", "Global Accelerator", "Direct Connect"],
+        "correctAnswer": "Route 53",
+        "explanation": "Route 53 provides DNS-based routing and health checks."
+      },
+      {
+        "id": "q85",
+        "type": "mcq",
+        "prompt": "Which AWS service provides disaster recovery by replicating workloads across regions?",
+        "options": ["CloudEndure", "DMS", "DataSync", "Snowball"],
+        "correctAnswer": "CloudEndure",
+        "explanation": "CloudEndure Disaster Recovery replicates workloads across regions."
+      },
+      {
+        "id": "q86",
+        "type": "mcq",
+        "prompt": "Which AWS service provides multi-region, multi-active database deployments?",
+        "options": ["Aurora Global Database", "DynamoDB Global Tables", "RDS Multi-AZ", "Redshift Spectrum"],
+        "correctAnswer": "DynamoDB Global Tables",
+        "explanation": "DynamoDB Global Tables replicate data across regions for HA."
+      },
+      {
+        "id": "q87",
+        "type": "mcq",
+        "prompt": "Which AWS service provides managed message queuing for decoupling applications?",
+        "options": ["SNS", "SQS", "Kinesis", "EventBridge"],
+        "correctAnswer": "SQS",
+        "explanation": "Amazon SQS is a fully managed message queuing service."
+      },
+      {
+        "id": "q88",
+        "type": "mcq",
+        "prompt": "Which AWS service provides pub/sub messaging for event-driven architectures?",
+        "options": ["SNS", "SQS", "Kinesis", "EventBridge"],
+        "correctAnswer": "SNS",
+        "explanation": "Amazon SNS is a pub/sub messaging service."
+      },
+      {
+        "id": "q89",
+        "type": "mcq",
+        "prompt": "Which AWS service provides event bus functionality for application integration?",
+        "options": ["SNS", "SQS", "Kinesis", "EventBridge"],
+        "correctAnswer": "EventBridge",
+        "explanation": "Amazon EventBridge connects applications using events."
+      },
+      {
+        "id": "q90",
+        "type": "mcq",
+        "prompt": "Which AWS service provides real-time data streaming and analytics?",
+        "options": ["Kinesis", "SQS", "SNS", "EventBridge"],
+        "correctAnswer": "Kinesis",
+        "explanation": "Amazon Kinesis ingests and processes real-time streaming data."
+      }
+    ]
+  }

@@ -1,0 +1,86 @@
+{
+    "subject": "Compute",
+    "questions": [
+      {
+        "id": "q11",
+        "type": "mcq",
+        "prompt": "Which EC2 pricing model is best for workloads that can tolerate interruptions?",
+        "options": ["On-Demand", "Reserved", "Spot", "Dedicated"],
+        "correctAnswer": "Spot",
+        "explanation": "Spot Instances are cost-effective but interruptible."
+      },
+      {
+        "id": "q12",
+        "type": "mcq",
+        "prompt": "Which service allows running containers without managing servers?",
+        "options": ["ECS with EC2", "ECS with Fargate", "EKS", "Lambda"],
+        "correctAnswer": "ECS with Fargate",
+        "explanation": "Fargate is serverless for containers."
+      },
+      {
+        "id": "q13",
+        "type": "mcq",
+        "prompt": "Which service is best for event-driven serverless compute?",
+        "options": ["EC2", "ECS", "Lambda", "Batch"],
+        "correctAnswer": "Lambda",
+        "explanation": "Lambda runs code without provisioning servers."
+      },
+      {
+        "id": "q14",
+        "type": "mcq",
+        "prompt": "Which service is best for batch computing workloads?",
+        "options": ["Lambda", "Batch", "ECS", "EC2"],
+        "correctAnswer": "Batch",
+        "explanation": "AWS Batch manages batch computing jobs."
+      },
+      {
+        "id": "q15",
+        "type": "mcq",
+        "prompt": "Which EC2 feature allows automatic scaling based on demand?",
+        "options": ["Auto Scaling", "Elastic Load Balancing", "CloudWatch", "Reserved Instances"],
+        "correctAnswer": "Auto Scaling",
+        "explanation": "Auto Scaling adjusts capacity automatically."
+      },
+      {
+        "id": "q16",
+        "type": "mcq",
+        "prompt": "Which service provides managed Kubernetes?",
+        "options": ["ECS", "EKS", "Fargate", "Batch"],
+        "correctAnswer": "EKS",
+        "explanation": "Amazon EKS is AWS’s managed Kubernetes service."
+      },
+      {
+        "id": "q17",
+        "type": "mcq",
+        "prompt": "Which service distributes traffic across multiple EC2 instances?",
+        "options": ["CloudFront", "Route 53", "Elastic Load Balancing", "Auto Scaling"],
+        "correctAnswer": "Elastic Load Balancing",
+        "explanation": "ELB distributes traffic across instances."
+      },
+      {
+        "id": "q18",
+        "type": "mcq",
+        "prompt": "Which EC2 storage option is ephemeral and deleted when the instance stops?",
+        "options": ["EBS", "Instance Store", "EFS", "S3"],
+        "correctAnswer": "Instance Store",
+        "explanation": "Instance Store is temporary storage tied to the instance lifecycle."
+      },
+      {
+        "id": "q19",
+        "type": "mcq",
+        "prompt": "Which service allows running virtual desktops in AWS?",
+        "options": ["WorkSpaces", "AppStream 2.0", "EC2", "ECS"],
+        "correctAnswer": "WorkSpaces",
+        "explanation": "Amazon WorkSpaces is a managed desktop service."
+      },
+      {
+        "id": "q20",
+        "type": "mcq",
+        "prompt": "Which service allows streaming applications to end users without installation?",
+        "options": ["WorkSpaces", "AppStream 2.0", "EC2", "ECS"],
+        "correctAnswer": "AppStream 2.0",
+        "explanation": "AppStream 2.0 streams applications securely."
+      }
+    ]
+
+  }

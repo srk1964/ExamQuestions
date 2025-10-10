@@ -31,16 +31,16 @@
         }
       }
     },
-    "0f464f73475620f74431b6344a021029c40646d5a372706704cf055fe42cee13": {
+    "497618d0f0d20af82d89637bd259cbdcde99db2786f635e46f9b602bd4fe8db2": {
       "displayName": "SeedQuizzes/Asset1",
       "source": {
-        "path": "asset.0f464f73475620f74431b6344a021029c40646d5a372706704cf055fe42cee13",
+        "path": "asset.497618d0f0d20af82d89637bd259cbdcde99db2786f635e46f9b602bd4fe8db2",
         "packaging": "zip"
       },
       "destinations": {
-        "446056240677-us-east-1-f40adeb4": {
+        "446056240677-us-east-1-e2ee6a63": {
           "bucketName": "cdk-hnb659fds-assets-446056240677-us-east-1",
-          "objectKey": "0f464f73475620f74431b6344a021029c40646d5a372706704cf055fe42cee13.zip",
+          "objectKey": "497618d0f0d20af82d89637bd259cbdcde99db2786f635e46f9b602bd4fe8db2.zip",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::446056240677:role/cdk-hnb659fds-file-publishing-role-446056240677-us-east-1"
         }
@@ -76,16 +76,16 @@
         }
       }
     },
-    "f469c077502c32ce4adac6d58aba6c91d163eb0286b8862e0e922259bcc99c7e": {
+    "fee05e1b5ae87ec04dbfe98974d262c6bc0b559a33985b5f79bc92798adff8be": {
       "displayName": "DeploySite/Asset2",
       "source": {
-        "path": "asset.f469c077502c32ce4adac6d58aba6c91d163eb0286b8862e0e922259bcc99c7e",
+        "path": "asset.fee05e1b5ae87ec04dbfe98974d262c6bc0b559a33985b5f79bc92798adff8be",
         "packaging": "zip"
       },
       "destinations": {
-        "446056240677-us-east-1-ace9873e": {
+        "446056240677-us-east-1-81974bdf": {
           "bucketName": "cdk-hnb659fds-assets-446056240677-us-east-1",
-          "objectKey": "f469c077502c32ce4adac6d58aba6c91d163eb0286b8862e0e922259bcc99c7e.zip",
+          "objectKey": "fee05e1b5ae87ec04dbfe98974d262c6bc0b559a33985b5f79bc92798adff8be.zip",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::446056240677:role/cdk-hnb659fds-file-publishing-role-446056240677-us-east-1"
         }
@@ -106,16 +106,16 @@
         }
       }
     },
-    "a39758396c7beb459e8fda960e4f61ff2df3b6b736178621f7da8fcc206b4b6f": {
+    "334329adb29da8d7c3c045779eb63415e74af1ab0272be392aa77e48b405167c": {
       "displayName": "QuizInfraStack Template",
       "source": {
         "path": "QuizInfraStack.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "446056240677-us-east-1-3bae1b78": {
+        "446056240677-us-east-1-99adcdd3": {
           "bucketName": "cdk-hnb659fds-assets-446056240677-us-east-1",
-          "objectKey": "a39758396c7beb459e8fda960e4f61ff2df3b6b736178621f7da8fcc206b4b6f.json",
+          "objectKey": "334329adb29da8d7c3c045779eb63415e74af1ab0272be392aa77e48b405167c.json",
           "region": "us-east-1",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::446056240677:role/cdk-hnb659fds-file-publishing-role-446056240677-us-east-1"
         }
