@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Trophy, CheckCircle, XCircle } from "lucide-react";
+import { Trophy } from "lucide-react";
 
 interface Config {
   VITE_API_URL: string;
@@ -14,7 +14,7 @@ function App() {
   const [loadingQuestions, setLoadingQuestions] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [config, setConfig] = useState<Config | null>(null);
-  const [showStats, setShowStats] = useState(false);
+  const [, setShowStats] = useState(false);
 
   useEffect(() => {
     // Fetch config.json from the root of the site
@@ -108,155 +108,178 @@ function App() {
   const answeredCount = Object.values(answers).filter((a) => a.selected !== undefined).length;
   const correctCount = Object.values(answers).filter((a) => a.correct).length;
   const incorrectCount = answeredCount - correctCount;
-  const scorePercent = totalQuestions ? Math.round((correctCount / totalQuestions) * 100) : 0;
+  // additional derived stats for sidebar
+  const completePercent = totalQuestions ? Math.round((answeredCount / totalQuestions) * 100) : 0;
+  const currentGrade = answeredCount ? Math.round((correctCount / answeredCount) * 100) : 0;
 
   if (!config && !error) return <p>Loading configuration...</p>;
   if (loadingSubjects) return <p>Loading subjects...</p>;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold text-center mb-2">Quiz App</h1>
-        <p className="text-center text-gray-500">Select a subject and answer the questions.</p>
+    <div style={{ padding: '1.5rem', maxWidth: '56rem', margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <header style={{ marginBottom: '2rem', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: '2rem', borderRadius: '1rem', color: 'white' }}>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', margin: '0 0 0.5rem', textAlign: 'center' }}>Quiz App</h1>
+        <p style={{ margin: 0, textAlign: 'center', fontSize: '1.1rem', opacity: 0.9 }}>Test your knowledge with interactive quizzes</p>
       </header>
 
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold mb-2">Subjects</h2>
-        {error && <p className="text-red-600">{error}</p>}
-        <ul className="flex flex-wrap gap-2">
+      <section style={{ marginBottom: '2rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>📚 Select a Subject</h2>
+        {error && <p style={{ color: '#dc2626', padding: '1rem', backgroundColor: '#fee2e2', borderRadius: '0.5rem' }}>{error}</p>}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.75rem' }}>
           {subjects.map((s) => (
-            <li key={s}>
-              <button
-                onClick={() => {
-                  setSelected(s);
-                  setShowStats(false);
-                }}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring"
-              >
-                {s}
-              </button>
-            </li>
+            <button
+              key={s}
+              onClick={() => {
+                setSelected(s);
+                setShowStats(false);
+              }}
+              style={{
+                padding: '1rem',
+                backgroundColor: selected === s ? '#2563eb' : '#f0f9ff',
+                color: selected === s ? 'white' : '#0284c7',
+                border: `2px solid ${selected === s ? '#1d4ed8' : '#bfdbfe'}`,
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                fontWeight: '600',
+                fontSize: '1rem',
+                transition: 'all 0.2s',
+              }}
+              onMouseOver={(e) => {
+                if (selected !== s) (e.target as HTMLButtonElement).style.backgroundColor = '#dbeafe';
+              }}
+              onMouseOut={(e) => {
+                if (selected !== s) (e.target as HTMLButtonElement).style.backgroundColor = '#f0f9ff';
+              }}
+            >
+              {s}
+            </button>
           ))}
-        </ul>
+        </div>
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold mb-2">Questions</h2>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1f2937' }}>❓ Questions</h2>
         {selected ? (
-          <div>
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-lg font-medium">Selected: {selected}</span>
-              {totalQuestions > 0 && (
-                <button
-                  onClick={() => setShowStats((v) => !v)}
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  {showStats ? 'Hide stats' : 'Show stats'}
-                </button>
-              )}
-            </div>
-
-            {showStats && totalQuestions > 0 && (
-              <div className="mb-4 p-4 bg-gray-100 rounded">
-                <p className="font-semibold flex items-center gap-1"> <Trophy className="w-5 h-5 text-yellow-500" /> Progress</p>
-                <div className="w-full bg-gray-200 rounded h-2 my-2">
-                  <div
-                    className="bg-green-500 h-2 rounded"
-                    style={{ width: `${scorePercent}%` }}
-                  ></div>
+          totalQuestions > 0 ? (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: '2rem' }}>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#f3f4f6', borderRadius: '0.5rem' }}>
+                  <span style={{ fontSize: '1.125rem', fontWeight: '600', color: '#374151' }}>Subject: <strong style={{ color: '#2563eb' }}>{selected}</strong></span>
                 </div>
-                <p className="text-sm flex items-center gap-1">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  {answeredCount} / {totalQuestions} answered ({scorePercent}% correct)
-                </p>
-                <p className="text-sm text-green-600 flex items-center gap-1">
-                  <CheckCircle className="w-4 h-4" />
-                  Correct: {correctCount}
-                </p>
-                <p className="text-sm text-red-600 flex items-center gap-1">
-                  <XCircle className="w-4 h-4" />
-                  Incorrect: {incorrectCount}
-                </p>
-              </div>
-            )}
 
-            {loadingQuestions ? (
-              <p>Loading questions...</p>
-            ) : questions ? (
-              <div className="space-y-6">
-                {(questions.questions || []).map((q: any) => {
-                  const ans = answers[q.id] || {};
-                  return (
-                    <div
-                      key={q.id}
-                      className="p-4 border rounded shadow-sm bg-white dark:bg-gray-800"
-                    >
-                      <p className="font-semibold mb-2">{q.prompt}</p>
-                      {q.type === 'mcq' && (
-                        <div className="space-y-2">
-                          {q.options.map((opt: string) => {
-                            const selected = ans.selected === opt;
-                            const isCorrect = ans.correct && selected;
-                            const isIncorrect = ans.selected && !ans.correct && selected;
-                            return (
-                              <button
-                                key={opt}
-                                onClick={() => handleMcqSelect(q, opt)}
-                                disabled={!!ans.selected}
-                                className={`w-full text-left px-3 py-2 border rounded transition-colors ` +
-                                  (isCorrect
-                                    ? 'bg-green-100 border-green-400'
-                                    : isIncorrect
-                                    ? 'bg-red-100 border-red-400'
-                                    : 'bg-white hover:bg-gray-50')}
-                              >
-                                {opt}
-                              </button>
-                            );
-                          })}
-                          {ans.selected && (
-                            <div className="mt-2">
-                              <p className="m-0">
-                                {ans.correct ? (
-                                  <span className="text-green-600 font-semibold">Correct</span>
-                                ) : (
-                                  <span className="text-red-600 font-semibold">Incorrect</span>
-                                )}
-                              </p>
-                              {q.explanation && <p className="mt-2">{q.explanation}</p>}
-                            </div>
-                          )}
-                        </div>
-                      )}
+                {loadingQuestions ? (
+                  <p style={{ textAlign: 'center', color: '#6b7280' }}>⏳ Loading questions...</p>
+                ) : questions ? (
+                  <div style={{ display: 'grid', gap: '1.5rem' }}>
+                    {(questions.questions || []).map((q: any) => {
+                      const ans = answers[q.id] || {};
+                      return (
+                        <div
+                          key={q.id}
+                          style={{
+                            padding: '1.5rem',
+                            border: `2px solid ${ans.selected ? ans.correct ? '#10b981' : '#ef4444' : '#e5e7eb'}`,
+                            borderRadius: '0.75rem',
+                            backgroundColor: ans.selected ? ans.correct ? '#f0fdf4' : '#fef2f2' : 'white',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                            transition: 'all 0.2s',
+                          }}
+                        >
+                          <p style={{ fontWeight: '600', fontSize: '1.1rem', marginBottom: '1rem', color: '#1f2937' }}>{q.prompt}</p>
 
-                      {q.type === 'short' && (
-                        <div>
-                          {!ans.selected ? (
-                            <ShortAnswerInput onSubmit={(v: string) => handleShortSubmit(q, v)} />
-                          ) : (
+                          {q.type === 'mcq' && (
                             <div>
-                              {ans.correct ? (
-                                <span className="text-green-600 font-semibold">Correct</span>
-                              ) : (
-                                <span className="text-red-600 font-semibold">
-                                  Incorrect — correct answer: {q.correctAnswer}
-                                </span>
+                              <div style={{ display: 'grid', gap: '0.75rem', marginBottom: '1rem' }}>
+                                {q.options.map((opt: string) => {
+                                  const isSelected = ans.selected === opt;
+                                  const isCorrect = ans.correct && isSelected;
+                                  const isIncorrect = ans.selected && !ans.correct && isSelected;
+                                  return (
+                                    <button
+                                      key={opt}
+                                      onClick={() => handleMcqSelect(q, opt)}
+                                      disabled={!!ans.selected}
+                                      style={{
+                                        textAlign: 'left',
+                                        padding: '1rem',
+                                        backgroundColor: isCorrect ? '#d1fae5' : isIncorrect ? '#fee2e2' : '#f9fafb',
+                                        border: `2px solid ${isCorrect ? '#10b981' : isIncorrect ? '#ef4444' : '#e5e7eb'}`,
+                                        borderRadius: '0.5rem',
+                                        cursor: ans.selected ? 'default' : 'pointer',
+                                        fontWeight: isSelected ? '600' : '500',
+                                        fontSize: '1rem',
+                                        color: '#1f2937',
+                                        transition: 'all 0.2s',
+                                        opacity: ans.selected && !isSelected ? 0.5 : 1,
+                                      }}
+                                      onMouseOver={(e) => {
+                                        if (!ans.selected) (e.target as HTMLButtonElement).style.backgroundColor = '#f3f4f6';
+                                      }}
+                                      onMouseOut={(e) => {
+                                        if (!ans.selected) (e.target as HTMLButtonElement).style.backgroundColor = '#f9fafb';
+                                      }}
+                                    >
+                                      {isSelected && (
+                                        <span style={{ marginRight: '0.5rem' }}>{isCorrect ? '✓' : '✗'}</span>
+                                      )}
+                                      {opt}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+
+                              {ans.selected && (
+                                <div style={{ padding: '1rem', backgroundColor: 'white', borderRadius: '0.5rem', border: `1px solid ${ans.correct ? '#10b981' : '#ef4444'}` }}>
+                                  <p style={{ margin: '0 0 0.5rem', fontWeight: 'bold', color: ans.correct ? '#10b981' : '#ef4444', fontSize: '1.1rem' }}>
+                                    {ans.correct ? '✓ Correct!' : '✗ Incorrect'}
+                                  </p>
+                                  {q.explanation && <p style={{ margin: 0, color: '#6b7280', fontSize: '0.95rem' }}>{q.explanation}</p>}
+                                </div>
                               )}
-                              {q.explanation && <p className="mt-2">{q.explanation}</p>}
+                            </div>
+                          )}
+
+                          {q.type === 'short' && (
+                            <div>
+                              {!ans.selected ? (
+                                <ShortAnswerInput onSubmit={(v: string) => handleShortSubmit(q, v)} />
+                              ) : (
+                                <div style={{ padding: '1rem', backgroundColor: 'white', borderRadius: '0.5rem', border: `1px solid ${ans.correct ? '#10b981' : '#ef4444'}` }}>
+                                  <p style={{ margin: '0 0 0.5rem', fontWeight: 'bold', color: ans.correct ? '#10b981' : '#ef4444', fontSize: '1.1rem' }}>
+                                    {ans.correct ? '✓ Correct!' : '✗ Incorrect'}
+                                  </p>
+                                  {!ans.correct && <p style={{ margin: '0.5rem 0 0', color: '#6b7280', fontSize: '0.95rem' }}>Correct answer: <strong>{q.correctAnswer}</strong></p>}
+                                  {q.explanation && <p style={{ margin: '0.5rem 0 0', color: '#6b7280', fontSize: '0.95rem' }}>{q.explanation}</p>}
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p style={{ textAlign: 'center', color: '#6b7280' }}>No questions loaded</p>
+                )}
               </div>
-            ) : (
-              <p>No questions loaded</p>
-            )}
-          </div>
+              <aside style={{ position: 'sticky', top: '2rem', alignSelf: 'start' }}>
+                <div style={{ padding: '1rem', backgroundColor: '#f0fdf4', borderRadius: '0.75rem', border: '2px solid #86efac', minWidth: '220px' }}>
+                  <p style={{ fontWeight: 'bold', marginBottom: '0.75rem', color: '#166534', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Trophy style={{ width: '1.5rem', height: '1.5rem', color: '#fbbf24' }} /> Stats
+                  </p>
+                  <p style={{ margin: '0.25rem 0' }}>Complete: <strong>{completePercent}%</strong></p>
+                  <p style={{ margin: '0.25rem 0' }}>Grade: <strong>{currentGrade}%</strong></p>
+                  <p style={{ margin: '0.25rem 0' }}>Answered: {answeredCount}/{totalQuestions}</p>
+                  <p style={{ margin: '0.25rem 0' }}>Correct: {correctCount}</p>
+                  {incorrectCount > 0 && <p style={{ margin: '0.25rem 0', color: '#dc2626' }}>Incorrect: {incorrectCount}</p>}
+                </div>
+              </aside>
+            </div>
+          ) : (
+            <p style={{ textAlign: 'center', color: '#6b7280' }}>No questions loaded</p>
+          )
         ) : (
-          <p>Click a subject to load its questions.</p>
+          <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '1.1rem', padding: '2rem' }}>👆 Click a subject above to get started!</p>
         )}
       </section>
     </div>
@@ -268,16 +291,19 @@ export default App;
 function ShortAnswerInput({ onSubmit }: { onSubmit: (v: string) => void }) {
   const [value, setValue] = useState('');
   return (
-    <div className="flex gap-2">
+    <div style={{ display: 'flex', gap: '0.75rem' }}>
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Type your answer"
-        className="flex-1 px-3 py-2 border rounded"
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') onSubmit(value);
+        }}
+        placeholder="Type your answer..."
+        style={{ flex: 1, padding: '0.75rem', border: '1px solid #d1d5db', borderRadius: '0.5rem', fontSize: '1rem' }}
       />
       <button
         onClick={() => onSubmit(value)}
-        className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        style={{ padding: '0.75rem 1.5rem', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: '0.5rem', cursor: 'pointer', fontWeight: '600' }}
       >
         Submit
       </button>
