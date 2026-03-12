@@ -1,0 +1,6 @@
+# ignore runtime configuration that gets written during deploy
+config.json
+
+# node_modules should be ignored but each subproject has it
+frontend/node_modules/
+infra/node_modules/
